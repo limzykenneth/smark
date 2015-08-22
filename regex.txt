@@ -1,0 +1,55 @@
+https://vimeo.com/channels/staffpicks22/136394947
+https://vimeo.com/136394947
+http://vimeo.com/136394947
+vimeo.com/136394947
+www.vimeo.com/136394947
+http://www.vimeo.com/136394947
+aplehttp://www.vimeo.com/136394947asad
+http://www.vimeo.com/136394947asad
+http://www.vimeo.com/136394947 dadf
+
+https://www.youtube.com/watch?v=5sKah3pJnHI
+http://www.youtube.com/watch?v=5sKah3pJnHI
+https://youtu.be/5sKah3pJnHI
+youtube.com/watch?v=5sKah3pJnHI
+www.youtube.com/watch?v=5sKah3pJnHI
+https://www.youtube.com/embed/5sKah3pJnHI
+http://www.youtube.com/embed/watch?feature=player_embedded&v=r5nB9u4jjy4
+
+apple.jpg
+apple.gif
+apple.jpeg
+apple.png
+apple.bmp
+http://monster.com/apple.png
+http://www.nowhere.com/images/image.gif
+./images/image.gif
+/images/image.gif
+images/image.gif
+
+http://www.nowhere.com
+http://nowhere.com
+http://blog.nowhere.com
+https://www.nowhere.com
+http://www.nowhere.com/product_page.html
+http://www.nowhere.com/product/
+http://www.nowhere.com/product/3456
+http://www.nowhere.com/product_page.php?product=28
+http://www.nowhere.com?product=28&color=blue
+http://www.nowhere.com#details
+./here/there.html
+
+The idea is borrowed from [“Telescope time without tears”] (http://arxiv.org/pdf/0906.1943.pdf) by Professor Merrifield and Professor Saari.
+<a target=_blank href="$2">$1</a>
+
+Working in groups of two, the paradox we've chosen is ["You got to get up to get down"] (http://yolo.com).
+Working in groups of two, the paradox we've chosen is "You got to get up to get down".
+Working in groups of two, the paradox we've chosen is \"You got to get up to get down\".
+([[\n \.,;:])\\?"(.+?)\\?"([\n \.,;:\b\]])	$1“$2”$3
+
+Working in groups of two, the paradox we've chosen is \'You got to get up to get down\'.
+Working in groups of two, the paradox we've chosen is 'You got to get up to get down'.
+Working in groups of two, the paradox we've chosen is ['You got to get up to get down'].
+They're going to eat 'im!
+'er song is 'effing good.
+([[\n \.,;:])\\?'(.+?)\\?'([\n \.,;:\b\]])	$1‘$2’$3
