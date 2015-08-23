@@ -16,60 +16,51 @@ var htmlRE = /^((?!.*(jpg|jpeg|gif|png|bmp))(https?:\/\/)[\w\-_]+(\.[\w\-_]+)+[\
 
 // Parses inline markdown style link into <a> tags.
 // Replace with <a target=_blank href="$2">$1</a> to use.
-var linkMdRE = /\[(.+?)\] \((.+?)\)/;
+var linkMdRE = /\[(.+?)\] \((.+?)\)/g;
 
 // Typographic changes. Check regex.txt for usage.
-var dQuotRE = /([[\n \.,;:])\\?"(.+?)\\?"([\n \.,;:\b\]])/;
-var sQuotRE = /([[\n \.,;:])\\?'(.+?)\\?'([\n \.,;:\b\]])/;
+var dQuotRE = /([[\n \.,;:])\\?"(.+?)\\?"([\n \.,;:\b\]])/g;
+var sQuotRE = /([[\n \.,;:])\\?'(.+?)\\?'([\n \.,;:\b\]])/g;
+
 
 // Function to generate the final parsed html result
-function snippets(source){
+smark = function(source){
     var tmp = source;
     
     if(youtubeRE.test(source)){
         // Source is a Youtube link
-        tmp = source.replace(youtubeRE, $1);
+        tmp = source.replace(youtubeRE, "$1");
         snip = '<iframe src="https://www.youtube.com/embed/'+ tmp + '" frameborder="0" allowfullscreen></iframe>';
 
     }else if(vimeoRE.test(source)){
         // Source is a Vimeo link
-        tmp = source.replace(vimeoRE, $1);
+        tmp = source.replace(vimeoRE, "$1");
         snip = '<iframe src="https://player.vimeo.com/video/' + tmp + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
 
     }else if(imageRE.test(source)){
         // Source is an image link
-        tmp = source.match(imageRE);
+        tmp = source.match(imageRE)[0];
         snip = '<img src="' + tmp + '">';
 
     }else if(htmlRE.test(source)){
         // Source is a general link valid for iframe
         // Note: This is executed after Youtube and Vimeo test
         //       because this will be a valid match for them as well.
-        tmp = source.match(htmlRE);
+        tmp = source.match(htmlRE)[0];
         snip = '<iframe src="' + tmp + '" frameborder="0"></iframe>';
     }else{
         // Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
-        tmp = source.replace(dQuotRE, $1 + "“" + $2 + "”" + $3);
-        tmp = tmp.replace(sQuotRE, $1 + "‘" + $2 + "’" + $3);
+        tmp = source.replace(dQuotRE, "$1“$2”$3");
+        tmp = tmp.replace(sQuotRE, "$1‘$2’$3");
 
         // Markdown style link syntax will be catch and converted.
-        tmp = tmp.replace(linkMdRE, '<a target=_blank href="' + $2 + '">' + $1 + '</a>');
+        tmp = tmp.replace(linkMdRE, '<a target=_blank href="$2">$1</a>');
 
         // Treat the source as just a paragraph of text.
         snip = "<p>" + tmp + "</p>";
     }  
 
     return snip;
-}
+};
 
-// parser
-// Classes option for tags
-// Prepare for module.exports
-
-
-// Typographic changes (use the right character)
-// use regular expressions
-// jpg etc. to <img>
-// youtube to <iframe youtube>
-// vimeo to <iframe vimeo>
-// link (http://www.something.com) to <a>
+module.exports = smark;
