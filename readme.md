@@ -37,4 +37,3 @@ This is mostly a note-to-self section. If you have problems using Smark, it migh
 1. Need to add class to facilitate styling. According to type.
 1. Return an object that contains original string, parsed string and type of match: example.source, example.smark, example.type
 1. Escape parsing of "" or '' (not advised but I guess should be an option)
-1. 
