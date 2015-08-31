@@ -42,7 +42,6 @@ This is mostly a note-to-self section. If you have problems using Smark, it migh
 
 1. Return an object that contains original string, parsed string and type of match: example.source, example.smark, example.type
 1. Escape parsing of "" or '' (not advised but I guess should be an option)
-<<<<<<< HEAD
 1. Possible restructure of code base.
 
 Next, some to dos:
@@ -50,5 +49,4 @@ Next, some to dos:
 1. Need to add class to facilitate styling. According to type.
 1. CLI use
 1. Default sizes
-=======
->>>>>>> 198c220eed5258f41d6ca42f4cd4745681a9a610
+1. Implement markdown like features as stated in note.txt

@@ -1,0 +1,35 @@
+-> [link] (http://www.example.com/)
+   -> <a href="http://www.example.com/">link</a>
+-> [link -blank] (http://www.example.com/)
+   -> <a href="http://www.example.com/" target=_blank>link</a>
+
+-> <http://www.example.com/>
+   -> <a href="http://www.example.com/">http://www.example.com/</a>
+-> [-blank] <http://www.example.com/>
+   -> <a href="http://www.example.com/" target=_blank>http://www.example.com/</a>
+
+-> ```This is a blockquote.```
+   -> <blockquote><p>This is a blockquote</p></blockquote>
+-> ```This is a blockquote.[-source:Some smart person]```
+   -> <blockquote><p>This is a blockquote</p><footer>- Some smart person</footer></blockquote>
+
+-> 1. Apple  1. Orange  1. Pear
+-> 1. Apple  2. Orange  3. Pear
+   -> <ol><li>Apple</li><li>Orange</li><li>Pear</li></ol>
+
+-> * Apple  * Orange  * Pear
+   -> <ul><li>Apple</li><li>Orange</li><li>Pear</li></ul>
+
+-> # This is an H1 #
+   -> <h1>This is an H1</h1>
+
+-> ## This is an H2 ##
+   -> <h2>This is an H2</h2>
+.
+.
+.
+-> ###### This is an H6 ######
+   -> <h6>This is an H6</h6>
+
+-> Horizontal --- Rule
+   -> <p>Horizontal</p><hr /><p>Rule</p>
