@@ -42,3 +42,16 @@ DONE -------------------
 -> Horizontal --- Rule
    -> <p>Horizontal</p><hr /><p>Rule</p>
 DONE -------------------
+
+
+Typography:
+Vol. III -> Vol.III
+p. 245 -> p.245
+c. 1997 -> <i>c.</i>1997
+fl. 1560 -> <i>fl.</i>1560
+i.e. -> <i>ie</i>
+e.g. -> <i>eg</i>
+It's -> It’s
+1999-2000 -> 1999–2000
+... -> …
+DONE -------------------

@@ -40,11 +40,11 @@ http://www.nowhere.com#details
 ./here/there.html
 
 	
-	The idea is borrowed from [“Telescope time without tears”] (http://arxiv.org/pdf/0906.1943.pdf) by Professor Merrifield and Professor Saari.
-	\[(.*?)\](?: |-blank )\((.+?)\)  <a href="$2">$1</a>
-	The idea is borrowed from [“Telescope time without tears”]-blank (http://arxiv.org/pdf/0906.1943.pdf) by Professor Merrifield and Professor Saari.
-	\[(.*?)\]-blank \((.+?)\)  <a target=_blank href="$2">$1</a>
-	(if $1 is empty, use $2 all the time)
+The idea is borrowed from [“Telescope time without tears”] (http://arxiv.org/pdf/0906.1943.pdf) by Professor Merrifield and Professor Saari.
+\[(.*?)\](?: |-blank )\((.+?)\)  <a href="$2">$1</a>
+The idea is borrowed from [“Telescope time without tears”]-blank (http://arxiv.org/pdf/0906.1943.pdf) by Professor Merrifield and Professor Saari.
+\[(.*?)\]-blank \((.+?)\)  <a target=_blank href="$2">$1</a>
+(if $1 is empty, use $2 all the time)
 
 
 Working in groups of two, the paradox we've chosen is ["You got to get up to get down"] (http://yolo.com).
@@ -60,25 +60,53 @@ They're going to eat 'im!
 ([[\n \.,;:])\\?'(.+?)\\?'([\n \.,;:\b\]])	$1‘$2’$3
 
 	
-	```This is a blockquote.```
-	```This is a blockquote.[-source:Some smart person]```
-	```(.+?)(?:\[-source:(.+?)\])?```  <blockquote>$1<footer>$2</footer></blockquote>
+```This is a blockquote.```
+```This is a blockquote.[-source:Some smart person]```
+```(.+?)(?:\[-source:(.+?)\])?```  <blockquote>$1<footer>$2</footer></blockquote>
 
-	
-	1. Apple | 1. Orange | 1. Pear | 1. Apple | 2. Orange | 3. Pear and peaches |
-	(?:\d\.\s(.+?) \| ?)+  <ol> code logic needed to iterate the array
 
-	
-	* Apple | * Orange | * Pear |
-	(?:\*\s(.+?) \| ?)+  <ul> code logic needed to iterate the array
+1. Apple | 1. Orange | 1. Pear | 1. Apple | 2. Orange | 3. Pear and peaches |
+(?:\d\.\s(.+?) \| ?)+  <ol> code logic needed to iterate the array
 
-	
-	# This is an H1 #
-	# (.+?) #  <h1>$1</h1>
 
-	###### This is an H6 ######
-	#{6} (.+?) #{6}  <h6>$1</h6>  Should iterate from h6 to h1.
+* Apple | * Orange | * Pear |
+(?:\*\s(.+?) \| ?)+  <ul> code logic needed to iterate the array
 
-	
-	Horizontal --- Rule
-	\s---\s  Horizontal<hr />Rule
+
+# This is an H1 #
+# (.+?) #  <h1>$1</h1>
+
+###### This is an H6 ######
+#{6} (.+?) #{6}  <h6>$1</h6>  Should iterate from h6 to h1.
+
+
+Horizontal --- Rule
+\s---\s  Horizontal<hr />Rule
+
+
+Vol. III -> Vol.III
+/\bvol\.\s\b/gi  Vol.
+
+p. 245 -> p.245
+\bp\.\s\b(?=\d+)  p.
+
+c. 1997 -> c.1997
+\bc\.\s\b(?=\d+)  <i>c.</i>
+
+fl. 1997 -> fl.1997
+\bfl\.\s\b(?=\d+)  <i>fl.</i>
+
+i.e.[ ] -> ie
+\bi\.e\.\s\b  <i>ie</i>[ ]
+
+e.g.[ ] -> eg
+\be\.g\.\s\b  <i>eg</i>[ ]
+
+it's
+([A-Za-z]+)'([a-z]+)  $1’$2
+
+1999-2000
+(\d+)-(\d+)  $1–$2
+
+...
+\.{3}  …

@@ -46,6 +46,15 @@ var hrRE = /\s---\s/g;
 // Typographic changes. Check regex.txt for usage.
 var dQuotRE = /([[\n \.,;:])\\?"(.+?)\\?"([\n \.,;:\b\]])/g;
 var sQuotRE = /([[\n \.,;:])\\?'(.+?)\\?'([\n \.,;:\b\]])/g;
+var volRE = /\bvol\.\s\b/gi;
+var pRE = /\bp\.\s\b(?=\d+)/g;
+var cRE = /\bc\.\s\b(?=\d+)/g;
+var flRE = /\bfl\.\s\b(?=\d+)/g;
+var ieRE = /\bi\.e\.\s\b/g;
+var egRE = /\be\.g\.\s\b/g;
+var aposRE = /([A-Za-z]+)'([a-z]+)/g;
+var endashRE = /(\d+)-(\d+)/g;
+var elipseRE = /\.{3}/g;
 
 
 var smark = smark || {};
@@ -90,6 +99,15 @@ smark.toHTML = function(source, options){
         if (typoMark){
             tmp = source.replace(dQuotRE, "$1“$2”$3");
             tmp = tmp.replace(sQuotRE, "$1‘$2’$3");
+            tmp = tmp.replace(volRE, "Vol.");
+            tmp = tmp.replace(pRE, "p.");
+            tmp = tmp.replace(cRE, "<i>c.</i>");
+            tmp = tmp.replace(flRE, "<i>fl.</fl>");
+            tmp = tmp.replace(ieRE, "<i>ie</i> ");
+            tmp = tmp.replace(egRE, "<i>eg</i> ");
+            tmp = tmp.replace(aposRE, "$1’$2");
+            tmp = tmp.replace(endashRE, "$1–$2");
+            tmp = tmp.replace(elipseRE, "…");
         }
 
 
