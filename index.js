@@ -1,3 +1,5 @@
+var smark = smark || {};
+
 // Regular expressions for matching or replace
 
 // Use $1 to return the video id  
@@ -56,9 +58,6 @@ var aposRE = /([A-Za-z]+)'([a-z]+)/g;
 var endashRE = /(\d+)-(\d+)/g;
 var elipseRE = /\.{3}/g;
 
-
-var smark = smark || {};
-
 // Prepare for code base restructure
 // smark.rex = require("./regex");
 // smark.toHTML = require("./core");
@@ -99,83 +98,10 @@ smark.toHTML = function(source, options){
         this.type = "website";
 
     }else{
-        // Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
-        if (typoMark){
-            tmp = source.replace(dQuotRE, "$1“$2”$3");
-            tmp = tmp.replace(sQuotRE, "$1‘$2’$3");
-            tmp = tmp.replace(volRE, "Vol.");
-            tmp = tmp.replace(pRE, "p.");
-            tmp = tmp.replace(cRE, "<i>c.</i>");
-            tmp = tmp.replace(flRE, "<i>fl.</fl>");
-            tmp = tmp.replace(ieRE, "<i>ie</i> ");
-            tmp = tmp.replace(egRE, "<i>eg</i> ");
-            tmp = tmp.replace(aposRE, "$1’$2");
-            tmp = tmp.replace(endashRE, "$1–$2");
-            tmp = tmp.replace(elipseRE, "…");
-        }
-
-
-        // Markdown style syntax will be catch and converted.
-        // Markdown style links
-        var template = "";
-        // If the link name is empty use the link address as the name
-        if (tmp.replace(linkRE, '$1') === ""){
-            template = '<a href="$2">$2</a>';
-            if (linkBlankRE.test(tmp)){
-                template = '<a target=_blank href="$2">$2</a>';
-            }
-
-        }else{
-            template = '<a href="$2">$1</a>';
-            if (linkBlankRE.test(tmp)){
-                template = '<a target=_blank href="$2">$1</a>';
-            }
-        }
-        tmp = tmp.replace(linkRE, template);
-
-
-        // Mardown style list
-        // Ordered list
-        var matchedOl = tmp.match(olRE);
-        for (var i=0; i<matchedOl.length; i++){
-            var matchedLi = matchedOl[i].match(olliRE);
-
-            template = "<ol>";
-            for (var j=0; j<matchedLi; j++){
-                template += "<li>" + matchedLi[j].replace(olliRe, "$1") + "</li>";
-            }
-            template += "</ol>";
-            tmp.replace(matchedOl[i], template);
-        }
-
-        // Unordered list
-        var matchedUl = tmp.match(ulRE);
-        for (var i=0; i<matchedUl.length; i++){
-            var matchedLi = matchedUl[i].match(ulliRE);
-
-            template = "<ul>";
-            for (var j=0; j<matchedLi; j++){
-                template += "<li>" + matchedLi[j].replace(ulliRe, "$1") + "</li>";
-            }
-            template += "</ul>";
-            tmp.replace(matchedUl[i], template);
-        }
-
-
-        // Markdown style H6 to H1, in that order.
-        tmp.replace(h6RE, "<h6>$1</h6>");
-        tmp.replace(h5RE, "<h5>$1</h5>");
-        tmp.replace(h4RE, "<h4>$1</h4>");
-        tmp.replace(h3RE, "<h3>$1</h3>");
-        tmp.replace(h2RE, "<h2>$1</h2>");
-        tmp.replace(h1RE, "<h1>$1</h1>");
-
-
-        // Markdown like horizontal rule.
-        // This is much stricter than markdown and I like to keep it that way.
-        //    For consistency. Convention before configuration or something like that.
-        tmp.replace(hrRE, "<hr />");
-
+        // Parse the string as a paragraph.
+        // Typographic changes will be made if noTypo is not passed.
+        // Markdown style syntax will be converted as well.
+        tmp = smark.parseParagraph(typoMark, tmp);
 
         // Treat the source as just a paragraph of text.
         result = "<p>" + tmp + "</p>";
@@ -185,4 +111,98 @@ smark.toHTML = function(source, options){
     return result;
 };
 
-// module.exports = smark;
+
+
+// Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
+smark.typographicChanges = function(enabled, tmp){
+    tmp = source.replace(dQuotRE, "$1“$2”$3");
+    tmp = tmp.replace(sQuotRE, "$1‘$2’$3");
+    tmp = tmp.replace(volRE, "Vol.");
+    tmp = tmp.replace(pRE, "p.");
+    tmp = tmp.replace(cRE, "<i>c.</i>");
+    tmp = tmp.replace(flRE, "<i>fl.</fl>");
+    tmp = tmp.replace(ieRE, "<i>ie</i> ");
+    tmp = tmp.replace(egRE, "<i>eg</i> ");
+    tmp = tmp.replace(aposRE, "$1’$2");
+    tmp = tmp.replace(endashRE, "$1–$2");
+    tmp = tmp.replace(elipseRE, "…");
+
+    return tmp;
+};
+
+
+// Parse the string as a paragraph.
+// See note.txt for more info.
+smark.parseParagraph = function(typoMark, tmp){
+    // Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
+    tmp = smark.typographicChanges(typoMark, tmp);
+
+    // Markdown style syntax will be catch and converted.
+    // Markdown style links
+
+    // template is a reused temporary variable, for sneaky convinience only.
+    var template = "";
+    
+
+    // If the link name is empty use the link address as the name
+    if (tmp.replace(linkRE, '$1') === ""){
+        template = '<a href="$2">$2</a>';
+        if (linkBlankRE.test(tmp)){
+            template = '<a target=_blank href="$2">$2</a>';
+        }
+    // If the link name is provided, use it then.
+    }else{
+        template = '<a href="$2">$1</a>';
+        if (linkBlankRE.test(tmp)){
+            template = '<a target=_blank href="$2">$1</a>';
+        }
+    }
+    tmp = tmp.replace(linkRE, template);
+
+
+    // Mardown style list
+    // Ordered list
+    var matchedOl = tmp.match(olRE);
+    for (var i=0; i<matchedOl.length; i++){
+        var matchedLi = matchedOl[i].match(olliRE);
+
+        template = "<ol>";
+        for (var j=0; j<matchedLi; j++){
+            template += "<li>" + matchedLi[j].replace(olliRe, "$1") + "</li>";
+        }
+        template += "</ol>";
+        tmp.replace(matchedOl[i], template);
+    }
+
+    // Unordered list
+    var matchedUl = tmp.match(ulRE);
+    for (var i=0; i<matchedUl.length; i++){
+        var matchedLi = matchedUl[i].match(ulliRE);
+
+        template = "<ul>";
+        for (var j=0; j<matchedLi; j++){
+            template += "<li>" + matchedLi[j].replace(ulliRe, "$1") + "</li>";
+        }
+        template += "</ul>";
+        tmp.replace(matchedUl[i], template);
+    }
+
+
+    // Markdown style H6 to H1, in that order.
+    tmp.replace(h6RE, "<h6>$1</h6>");
+    tmp.replace(h5RE, "<h5>$1</h5>");
+    tmp.replace(h4RE, "<h4>$1</h4>");
+    tmp.replace(h3RE, "<h3>$1</h3>");
+    tmp.replace(h2RE, "<h2>$1</h2>");
+    tmp.replace(h1RE, "<h1>$1</h1>");
+
+
+    // Markdown like horizontal rule.
+    // This is much stricter than markdown and I like to keep it that way.
+    //    For consistency. Convention before configuration or something like that.
+    tmp.replace(hrRE, "<hr />");
+
+    return tmp;
+};
+
+module.exports = smark;
