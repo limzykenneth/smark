@@ -1,70 +1,5 @@
-// Regular expressions for matching or replace
-
-// Use $1 to return the video id  
-var youtubeRE = /^(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch|embed\/watch|embed)?[\?\/]?(?:v=|feature=player_embedded&v=)?(\w+)$/;
-var vimeoRE = /^(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:channels\/)?(?:\w+\/)?(\d+)$/;
-
-
-// Match the whole string to return full path to image.
-// This basically just verify it is just a link to an image.
-var imageRE = /^(?! ).+\.(jpg|jpeg|gif|png|bmp)$/;
-
-
-// Match the whole string to return full URL.
-// This will check that given link is not images while having http type protocol or end with html.
-// Links that do not start with "http://" or end with ".html" 
-//     will not be recognized to prevent some errors with iframe.
-var htmlRE = /^((?!.*(jpg|jpeg|gif|png|bmp))(https?:\/\/)[\w\-_]+(\.[\w\-_]+)+[\w\-.,@?^=%&:\/~\\+#]*)|.+\.(?!jpg|jpeg|gif|png|bmp)html?$/;
-
-
-// Parses inline markdown style link into <a> tags.
-// Replace with <a href="$2">$1</a> to use.
-var linkRE = /\[(.*?)\](?: |-blank )\((.+?)\)/g;
-var linkBlankRE = /\[(.*?)\]-blank \((.+?)\)/g;
-
-
-// Parse inline mardown style list into a list.
-var olRE = /(?:\d\.\s(.+?) \| ?)+/g;
-var olliRE = /\d\.\s(.+?) \|/g;
-var ulRE = /(?:\*\s(.+?) \| ?)+/g;
-var ulliRe = /\*\s(.+?) \|/g;
-
-
-// Parses H6 to H1 tags in reverse order.
-var h6RE = /#{6} (.+?) #{6}/g;
-var h5RE = /#{5} (.+?) #{5}/g;
-var h4RE = /#{4} (.+?) #{4}/g;
-var h3RE = /#{3} (.+?) #{3}/g;
-var h2RE = /#{2} (.+?) #{2}/g;
-var h1RE = /# (.+?) #/g;
-
-
-// Parse markdown like horizontal rule.
-var hrRE = /\s---\s/g;
-
-
-// Typographic changes. Check regex.txt for usage.
-var dQuotRE = /([[\n \.,;:])\\?"(.+?)\\?"([\n \.,;:\b\]])/g;
-var sQuotRE = /([[\n \.,;:])\\?'(.+?)\\?'([\n \.,;:\b\]])/g;
-var volRE = /\bvol\.\s\b/gi;
-var pRE = /\bp\.\s\b(?=\d+)/g;
-var cRE = /\bc\.\s\b(?=\d+)/g;
-var flRE = /\bfl\.\s\b(?=\d+)/g;
-var ieRE = /\bi\.e\.\s\b/g;
-var egRE = /\be\.g\.\s\b/g;
-var aposRE = /([A-Za-z]+)'([a-z]+)/g;
-var endashRE = /(\d+)-(\d+)/g;
-var elipseRE = /\.{3}/g;
-
-
-var smark = smark || {};
-
-// Prepare for code base restructure
-// smark.rex = require("./regex");
-// smark.toHTML = require("./core");
-
-smark.toHTML = function(source, options){
-    var tmp = source;
+module.exports = function(){
+	var tmp = source;
     var typoMark = true;
     var result = "";
 
@@ -184,5 +119,3 @@ smark.toHTML = function(source, options){
 
     return result;
 };
-
-// module.exports = smark;
