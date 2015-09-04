@@ -41,12 +41,11 @@ Smark can be included in HTML or using Browserify.
 This is mostly a note-to-self section. If you have problems using Smark, it might be listed down below, other than that might not be so useful. Following is just some expected problems:
 
 1. Return an object that contains original string, parsed string and type of match: example.source, example.smark, example.type
-1. Escape parsing of "" or '' (not advised but I guess should be an option)
 1. Possible restructure of code base.
 
 Next, some to dos:
 
-1. Need to add class to facilitate styling. According to type.
+1. Finish test cases.
+1. Facilitate styling. According to type. Use less.js nesting, ie. global smark class and individual object within.
 1. CLI use
 1. Default sizes
-1. Implement markdown like features as stated in note.txt
