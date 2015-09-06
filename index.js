@@ -59,10 +59,12 @@ var smark = {
 };
 
 
-smark.toHTML = function(source, options){
+// smark.toHTML = function(source, options){
+smark.generate = function(source, options){
     var tmp = source;
     var typoMark = true;
     var result = "";
+    var type = "";
 
     for (var i = 0; i<options.length; i++){
         if (options[i]==noTypo) typoMark = false;
@@ -72,19 +74,19 @@ smark.toHTML = function(source, options){
         // Source is a Youtube link
         tmp = source.replace(this.youtubeRE, "$1");
         result = '<iframe src="https://www.youtube.com/embed/'+ tmp + '" frameborder="0" allowfullscreen></iframe>';
-        this.type = "youtube";
+        type = "youtube";
 
     }else if(this.vimeoRE.test(source)){
         // Source is a Vimeo link
         tmp = source.replace(this.vimeoRE, "$1");
         result = '<iframe src="https://player.vimeo.com/video/' + tmp + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-        this.type = "vimeo";
+        type = "vimeo";
 
     }else if(this.imageRE.test(source)){
         // Source is an image link
         tmp = source.match(this.imageRE)[0];
         result = '<img src="' + tmp + '">';
-        this.type = "image";
+        type = "image";
 
     }else if(this.htmlRE.test(source)){
         // Source is a general link valid for iframe
@@ -92,7 +94,7 @@ smark.toHTML = function(source, options){
         //       because this will be a valid match for them as well.
         tmp = source.match(this.htmlRE)[0];
         result = '<iframe src="' + tmp + '" frameborder="0"></iframe>';
-        this.type = "website";
+        type = "website";
 
     }else{
         // Parse the string as a paragraph.
@@ -102,14 +104,14 @@ smark.toHTML = function(source, options){
 
         // Treat the source as just a paragraph of text.
         result = "<p>" + tmp + "</p>";
-        this.type = "paragraph";
+        type = "paragraph";
     }  
 
-    return result;
-    // return {
-    //     result: result,
-    //     type: type
-    // };
+    // return result;
+    return {
+        html: result,
+        type: type
+    };
 };
 
 

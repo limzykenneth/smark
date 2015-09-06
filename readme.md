@@ -40,7 +40,7 @@ Smark can be included in HTML or using Browserify.
 
 This is mostly a note-to-self section. If you have problems using Smark, it might be listed down below, other than that might not be so useful. Following is just some expected problems:
 
-1. Return an object that contains original string, parsed string and type of match: example.source, example.smark, example.type
+1. ~~Return an object that contains original string, parsed string and type of match: example.source, example.smark, example.type~~
 1. Possible restructure of code base.
 
 Next, some to dos:
