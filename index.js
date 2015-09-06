@@ -73,19 +73,19 @@ smark.generate = function(source, options){
     if(this.youtubeRE.test(source)){
         // Source is a Youtube link
         tmp = source.replace(this.youtubeRE, "$1");
-        result = '<iframe class="smark youtube" src="https://www.youtube.com/embed/'+ tmp + '" frameborder="0" allowfullscreen></iframe>';
+        result = '<iframe class="smark youtube" src="https://www.youtube.com/embed/'+ tmp + '" frameborder="0" width="853" height="480" allowfullscreen></iframe>';
         type = "youtube";
 
     }else if(this.vimeoRE.test(source)){
         // Source is a Vimeo link
         tmp = source.replace(this.vimeoRE, "$1");
-        result = '<iframe class="smark vimeo" src="https://player.vimeo.com/video/' + tmp + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+        result = '<iframe class="smark vimeo" src="https://player.vimeo.com/video/' + tmp + '" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
         type = "vimeo";
 
     }else if(this.imageRE.test(source)){
         // Source is an image link
         tmp = source.match(this.imageRE)[0];
-        result = '<img class="smark image" src="' + tmp + '">';
+        result = '<img class="smark image" src="' + tmp + '" width="853" height="480">';
         type = "image";
 
     }else if(this.htmlRE.test(source)){
@@ -93,7 +93,7 @@ smark.generate = function(source, options){
         // Note: This is executed after Youtube and Vimeo test
         //       because this will be a valid match for them as well.
         tmp = source.match(this.htmlRE)[0];
-        result = '<iframe class="smark website" src="' + tmp + '" frameborder="0"></iframe>';
+        result = '<iframe class="smark website" src="' + tmp + '" width="853" height="480" frameborder="0"></iframe>';
         type = "website";
 
     }else{

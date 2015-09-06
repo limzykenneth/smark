@@ -46,6 +46,6 @@ This is mostly a note-to-self section. If you have problems using Smark, it migh
 Next, some to dos:
 
 1. Finish test cases.
-1. Facilitate styling. According to type. Use less.js nesting, ie. global smark class and individual object within.
+1. Facilitate styling. According to type. ~~Use less.js nesting, ie. global smark class and individual object within.~~
 1. CLI use
-1. Default sizes
+1. ~~Default sizes. 853x480~~
