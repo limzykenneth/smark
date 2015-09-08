@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Smark test</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="index.js"></script>
+</head>
+<body>
+	<h2>Smark Test – These are test cases for Smark. It must pass all as intended. Any new features must have corresponding test case as well.</h2>
+	<ul>
+		<li>The quick brown fox jumps over the lazy dog. THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.</li>
+		
+		<li>The idea is borrowed from ["Telescope time without tears"] (http://arxiv.org/pdf/0906.1943.pdf) by Professor Merrifield and Professor Saari. You can find more information explained by Professor Merrifield himself on [Youtube]-blank (https://www.youtube.com/watch?v=7c0CoXFApnM). ```The procedure that is currently employed to allocate time on telescopes is horribly onerous on those unfortunate astronomers who serve on the committees that administer the process, and is in danger of complete collapse as the number of applications steadily increases. Here, an alternative is presented, whereby the task is distributed around the astronomical community, with a suitable mechanism design established to steer the outcome toward awarding this precious resource to those projects where there is a consensus across the community that the science is most exciting and innovative.[-source:Telescope Time Without Tears]```</li>
+		
+		<li># Shopping list # 1. Apples | 1. Potatoes | 1. Tomatoes | 1. Milk | 1. Eggs | ## Where to shop ## * Round the corner | * Sainsbury's | * "The grocery store" |</li>
+		
+		<li>Jean-Charles, chevalier de Borda (May 4, 1733 – February 19, 1799) was a French mathematician, physicist, political scientist, and sailor. ``` #### Contents #### 1. Life history | 2. Tables of logarithms | 3. Honours | 4. See also | 5. Notes | 6. References | 7. External links |``` ### Life History ### --- Borda was born in the city of Dax to Jean‐Antoine de Borda and Jeanne‐Marie Thérèse de Lacroix. In 1756, Borda wrote Mémoire sur le mouvement des projectiles, a product of his work as a military engineer. For that, he was elected to the French Academy of Sciences in 1764. Between 1777-1778, he participated in the American Revolutionary War. --- Tables of logarithms --- With the advent of the metric system after the French Revolution it was decided that the quarter circle should be divided into 100 degrees instead of 90 degrees, and the degree into 100 seconds instead of 60 seconds. This required the calculation of trigonometric tables and logarithms corresponding to the new size of the degree and instruments for measuring angles in the new system.</li>
+
+		<li>https://www.youtube.com/watch?v=dQw4w9WgXcQ</li>
+
+		<li>https://vimeo.com/87007946</li>
+	</ul>
+
+	<h2>Results</h2>
+	<ul id="results"></ul>
+
+	<script>
+	$(document).ready(function() {
+		var s = [];
+		$("li").each(function(index) {
+			var str = $(this).html();
+			s.push(smark.generate(str));
+		});
+
+		for (var i=0; i<s.length; i++){
+			$("#results").append("<li>" + s[i].html + "</li>");
+		}
+		console.log(s);
+	});
+	</script>
+</body>
+</html>

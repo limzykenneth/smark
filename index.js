@@ -70,8 +70,10 @@ smark.generate = function(source, options){
 	var result = "";
 	var type = "";
 
-	for (var i = 0; i<options.length; i++){
-		if (options[i]==noTypo) typoMark = false;
+	if (options != undefined){
+		for (var i = 0; i<options.length; i++){
+			if (options[i]==noTypo) typoMark = false;
+		}
 	}
 
 	if(this.youtubeRE.test(source)){
@@ -171,53 +173,59 @@ smark.parseParagraph = function(typoMark, tmp){
 	// Mardown style list
 	// Ordered list
 	var matchedOl = tmp.match(this.olRE);
-	for (var i=0; i<matchedOl.length; i++){
-		var matchedLi = matchedOl[i].match(this.olliRE);
+	if (matchedOl != null){
+		for (var i=0; i<matchedOl.length; i++){
+			var matchedLi = matchedOl[i].match(this.olliRE);
 
-		template = "<ol>";
-		for (var j=0; j<matchedLi; j++){
-			template += "<li>" + matchedLi[j].replace(this.olliRe, "$1") + "</li>";
+			template = "<ol>";
+			for (var j=0; j<matchedLi.length; j++){
+				template += "<li>" + matchedLi[j].replace(this.olliRE, "$1") + "</li>";
+				console.log(template);
+			}
+			template += "</ol>";
+
+			tmp = tmp.replace(matchedOl[i], template);
 		}
-		template += "</ol>";
-		tmp.replace(matchedOl[i], template);
 	}
 
 	// Unordered list
 	var matchedUl = tmp.match(this.ulRE);
-	for (var i=0; i<matchedUl.length; i++){
-		var matchedLi = matchedUl[i].match(this.ulliRE);
+	if (matchedUl != null){
+		for (var i=0; i<matchedUl.length; i++){
+			var matchedLi = matchedUl[i].match(this.ulliRE);
 
-		template = "<ul>";
-		for (var j=0; j<matchedLi; j++){
-			template += "<li>" + matchedLi[j].replace(this.ulliRe, "$1") + "</li>";
+			template = "<ul>";
+			for (var j=0; j<matchedLi.length; j++){
+				template += "<li>" + matchedLi[j].replace(this.ulliRE, "$1") + "</li>";
+			}
+			template += "</ul>";
+			tmp = tmp.replace(matchedUl[i], template);
 		}
-		template += "</ul>";
-		tmp.replace(matchedUl[i], template);
 	}
 
 	// Block quotes
 	if(tmp.replace(this.bqRE, "$2") == ""){
-		tmp.replace(this.bqRE, "<blockquote><p>$1</p></blockquote>");
+		tmp = tmp.replace(this.bqRE, "<blockquote><p>$1</p></blockquote>");
 	}else{
-		tmp.replace(this.bqRE, "<blockquote><p>$1</p><footer>$2</footer></blockquote>");
+		tmp = tmp.replace(this.bqRE, "<blockquote><p>$1</p><footer>$2</footer></blockquote>");
 	}
 
 	// Markdown style H6 to H1, in that order.
-	tmp.replace(this.h6RE, "<h6>$1</h6>");
-	tmp.replace(this.h5RE, "<h5>$1</h5>");
-	tmp.replace(this.h4RE, "<h4>$1</h4>");
-	tmp.replace(this.h3RE, "<h3>$1</h3>");
-	tmp.replace(this.h2RE, "<h2>$1</h2>");
-	tmp.replace(this.h1RE, "<h1>$1</h1>");
+	tmp = tmp.replace(this.h6RE, "<h6>$1</h6>");
+	tmp = tmp.replace(this.h5RE, "<h5>$1</h5>");
+	tmp = tmp.replace(this.h4RE, "<h4>$1</h4>");
+	tmp = tmp.replace(this.h3RE, "<h3>$1</h3>");
+	tmp = tmp.replace(this.h2RE, "<h2>$1</h2>");
+	tmp = tmp.replace(this.h1RE, "<h1>$1</h1>");
 
 
 	// Markdown like horizontal rule.
 	// This is much stricter than markdown and I like to keep it that way.
 	//    For consistency. Convention before configuration or something like that.
-	tmp.replace(this.hrRE, "<hr />");
+	tmp = tmp.replace(this.hrRE, "<hr />");
 
 	return tmp;
 };
 
 
-module.exports = smark;
+// module.exports = smark;
