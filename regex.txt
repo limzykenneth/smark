@@ -110,3 +110,7 @@ it's
 
 ...
 \.{3}  …
+
+```Block quote```
+```This is a blockquote.[-source:Some smart person]```
+```(.+?)(?:\[-source:(.+)\])?```  <blockquote><p>$1</p><footer>$2</footer></blockquote>
