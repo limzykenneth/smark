@@ -1,6 +1,6 @@
 {
   "name": "smark",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Smart parser from strings into HTML",
   "main": "index.js",
   "scripts": {
