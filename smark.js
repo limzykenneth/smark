@@ -1,4 +1,6 @@
+// Declare a global smark object
 var smark = {
+	// Smark is mainly based on using regex.
 	// Regular expressions for matching or replace
 
 	// Use $1 to return the video id  
@@ -65,16 +67,25 @@ var smark = {
 
 // smark.toHTML = function(source, options){
 smark.generate = function(source, options){
+	// Temporary variable to store source string for parsing
 	var tmp = source;
+
+	// Parse typographic marks are on by default
 	var typoMark = true;
+
+	// The resulting html will be stored in this
 	var result = "";
+
+	// The type will be stored in this
 	var type = "";
 
+	// Check if typographic marks are turned off
 	if (options != undefined){
 		for (var i = 0; i<options.length; i++){
 			if (options[i]==noTypo) typoMark = false;
 		}
 	}
+
 
 	if(this.youtubeRE.test(source)){
 		// Source is a Youtube link

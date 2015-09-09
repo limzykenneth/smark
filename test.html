@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Smark test</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="index.js"></script>
+	<script src="smark.js"></script>
 </head>
 <body>
 	<h2>Smark Test – These are test cases for Smark. It must pass all as intended. Any new features must have corresponding test case as well.</h2>
@@ -30,13 +30,12 @@
 		var s = [];
 		$("li").each(function(index) {
 			var str = $(this).html();
-			s.push(smark.generate(str));
+			s.push(smark.generate(str).html);
 		});
 
 		for (var i=0; i<s.length; i++){
-			$("#results").append("<li>" + s[i].html + "</li>");
+			$("#results").append("<li>" + s[i] + "</li>");
 		}
-		console.log(s);
 	});
 	</script>
 </body>
