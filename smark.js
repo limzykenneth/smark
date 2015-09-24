@@ -80,7 +80,7 @@ smark.generate = function(source, options){
 	var type = "";
 
 	// Check if typographic marks are turned off
-	if (options != undefined){
+	if (options !== undefined){
 		for (var i = 0; i<options.length; i++){
 			if (options[i]==noTypo) typoMark = false;
 		}
@@ -135,17 +135,17 @@ smark.generate = function(source, options){
 
 // Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
 smark.typographicChanges = function(enabled, tmp){
-	tmp = tmp.replace(this.dQuotRE, "$1“$2”$3");
-	tmp = tmp.replace(this.sQuotRE, "$1‘$2’$3");
+	tmp = tmp.replace(this.dQuotRE, "$1&#8220;$2&#8221;$3");
+	tmp = tmp.replace(this.sQuotRE, "$1&#8216;$2&#8217;$3");
 	tmp = tmp.replace(this.volRE, "Vol.");
 	tmp = tmp.replace(this.pRE, "p.");
 	tmp = tmp.replace(this.cRE, "<i>c.</i>");
 	tmp = tmp.replace(this.flRE, "<i>fl.</fl>");
 	tmp = tmp.replace(this.ieRE, "<i>ie</i> ");
 	tmp = tmp.replace(this.egRE, "<i>eg</i> ");
-	tmp = tmp.replace(this.aposRE, "$1’$2");
-	tmp = tmp.replace(this.endashRE, "$1–$2");
-	tmp = tmp.replace(this.elipseRE, "…");
+	tmp = tmp.replace(this.aposRE, "$1&#8217;$2");
+	tmp = tmp.replace(this.endashRE, "$1&#8211;$2");
+	tmp = tmp.replace(this.elipseRE, "&#8230;");
 
 	return tmp;
 };
@@ -191,7 +191,6 @@ smark.parseParagraph = function(typoMark, tmp){
 			template = "<ol>";
 			for (var j=0; j<matchedLi.length; j++){
 				template += "<li>" + matchedLi[j].replace(this.olliRE, "$1") + "</li>";
-				console.log(template);
 			}
 			template += "</ol>";
 
@@ -201,7 +200,7 @@ smark.parseParagraph = function(typoMark, tmp){
 
 	// Unordered list
 	var matchedUl = tmp.match(this.ulRE);
-	if (matchedUl != null){
+	if (matchedUl !== null){
 		for (var i=0; i<matchedUl.length; i++){
 			var matchedLi = matchedUl[i].match(this.ulliRE);
 
@@ -215,7 +214,7 @@ smark.parseParagraph = function(typoMark, tmp){
 	}
 
 	// Block quotes
-	if(tmp.replace(this.bqRE, "$2") == ""){
+	if(tmp.replace(this.bqRE, "$2") === ""){
 		tmp = tmp.replace(this.bqRE, "<blockquote><p>$1</p></blockquote>");
 	}else{
 		tmp = tmp.replace(this.bqRE, "<blockquote><p>$1</p><footer>$2</footer></blockquote>");
