@@ -66,5 +66,4 @@ This is mostly a note-to-self section. If you have problems using Smark, it migh
 
 Expected problems:
 
-1. smark object could clash with existing object called smark.
 1. Option passing is too hard.
