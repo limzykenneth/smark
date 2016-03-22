@@ -1,7 +1,7 @@
 # Smark
 ## A string to HTML parser
 
-Smark is a small function library built to parse Javascript strings into HTML markup. Thus, Smark is aimed at people looking to decouple strings from HTML markup so you don't need to have messy HTML markup in strings or even databases storing data for the page. Smark also do typographic changes so the punctuation is used correctly in paragraphs.
+Smark is a tiny function library built to parse Javascript strings into HTML markup. Thus, Smark is aimed at people looking to decouple strings from HTML markup so you don't need to have messy HTML markup in strings or even databases storing data for the page. Smark also do typographic changes so the punctuation is used correctly in paragraphs.
 
 Instead of this:
 
@@ -55,15 +55,16 @@ $("body").append(result);
 At the moment you need to look at the source for for usage case since work on documentation is not done yet. The source is heavily comment though so hopefully it shouldn't be too hard to understand.
 
 
+(Note: I would consider smark to be in beta although it has pass 1.0 and I don't plan on releasing any breaking changes until 2.0. The point of it in beta is just because some features I planned might still be missing and the whole library can be more mature.)
+
 ## Problems
 
 This is mostly a note-to-self section. If you have problems using Smark, it might be listed down below, other than that might not be so useful. Some to dos:
 
 1. CLI use
-1. Browserify use
 1. Documentation
 1. Publish to npm
 
 Expected problems:
 
-1. Option passing is too hard.
+1. Option passing is too hard. (Might only ever be solved in 2.0)
