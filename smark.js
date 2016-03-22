@@ -1,3 +1,5 @@
+/* @license smark.js written by Kenneth Lim <limzy.kenneth@gmail.com> (http://designerken.be)
+   Lisence under the BSD 2-Clause License */
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.

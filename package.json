@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "uglifyjs smark.js -m -c > smark.min.js"
+    "compile": "uglifyjs smark.js -m --comments 'license' > smark.min.js"
   },
   "keywords": [
     "parse",
@@ -15,6 +15,6 @@
   "devDependencies": {
     "uglify-js": "~2.4.0"
   },
-  "author": "Kenneth Lim <info@designerken.be> (http://designerken.be)",
+  "author": "Kenneth Lim <limzy.kenneth@gmail.com> (http://designerken.be)",
   "license": "BSD-2-Clause"
 }
