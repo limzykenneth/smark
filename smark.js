@@ -36,8 +36,8 @@
 
 		// Parses inline markdown style link into <a> tags.
 		// Replace with <a href="$2">$1</a> to use.
-		linkRE: /\[(.*?)\](?: |-blank )\((.+?)\)/g,
-		linkBlankRE: /\[(.*?)\]-blank \((.+?)\)/g,
+		linkRE: /\[(.*?)\](?:|-blank) ?\((.+?)\)/g,
+		linkBlankRE: /\[(.*?)\]-blank ?\((.+?)\)/g,
 
 
 		// Parse inline mardown style list into a list.
@@ -116,7 +116,7 @@
 		}else if(this.imageRE.test(source)){
 			// Source is an image link
 			tmp = source.match(this.imageRE)[0];
-			result = '<img class="smark image" src="' + tmp + '" width="853" height="480">';
+			result = '<img class="smark image" src="' + tmp + '">';
 			type = "image";
 
 		}else if(this.htmlRE.test(source)){
