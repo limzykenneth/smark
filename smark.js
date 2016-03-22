@@ -24,7 +24,8 @@
 
 		// Match the whole string to return full path to image.
 		// This basically just verify it is just a link to an image.
-		imageRE: /^(?! ).+\.(jpg|jpeg|gif|png|bmp)$/,
+		imageRE: /^(?! )(.+?\.(?:jpg|jpeg|gif|png|bmp))(?: -title="(.+?)")?(?:\(.+?\))?$/,
+		imageLinkRE: /(?:\((.+?)\)){1}/,
 
 
 		// Match the whole string to return full URL.
@@ -79,7 +80,6 @@
 	};
 
 
-	// smark.toHTML = function(source, options){
 	smark.generate = function(source, options){
 		// Temporary variable to store source string for parsing
 		var tmp = source;
@@ -115,8 +115,18 @@
 
 		}else if(this.imageRE.test(source)){
 			// Source is an image link
-			tmp = source.match(this.imageRE)[0];
-			result = '<img class="smark image" src="' + tmp + '">';
+			tmp1 = source.replace(this.imageRE, "$1");
+			tmp2 = source.replace(this.imageRE, "$2");
+			tmp2 = this.typographicChanges(true, tmp2);
+			result = '<img class="smark image" title="' + tmp2 + '" src="' + tmp1 + '">';
+
+			if(this.imageLinkRE.test(source)){
+				// tmp3 = source.replace(this.imageLinkRE, "$1");
+				tmp3 = this.imageLinkRE.exec(source)[0];
+				tmp3 = tmp3.substring(1, tmp3.length - 1);
+				result = '<a href="' + tmp3 + '" target="_blank">' + result + "</a>";
+			}
+
 			type = "image";
 
 		}else if(this.htmlRE.test(source)){

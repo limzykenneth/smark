@@ -63,7 +63,6 @@ This is mostly a note-to-self section. If you have problems using Smark, it migh
 1. Browserify use
 1. Documentation
 1. Publish to npm
-1. Image links and tests
 
 Expected problems:
 
