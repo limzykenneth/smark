@@ -8,8 +8,8 @@ smark.options = {
 
 smark.generate = function(source, options) {
 	// Catching error in options
-	if(typeof options.type !== 'string') console.warn("'type' option only accepts string.");
-	if(typeof options.typography !== 'boolean') console.warn("'typopgraphy' option only accepts boolean.");
+	// if(typeof options.type !== 'string') console.warn("'type' option only accepts string.");
+	// if(typeof options.typography !== 'boolean') console.warn("'typopgraphy' option only accepts boolean.");
 
     
     // Temporary variable to store source string for parsing
