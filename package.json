@@ -5,6 +5,8 @@
   "main": "smark.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify ./src/main.js | cat header.txt - > smark.js",
+    "precompile": "npm run build",
     "compile": "uglifyjs smark.js -m --comments 'license' > smark.min.js"
   },
   "keywords": [
@@ -13,11 +15,12 @@
     "front-end"
   ],
   "devDependencies": {
+    "browserify": "^13.0.1",
     "uglify-js": "~2.4.0"
   },
   "author": "Kenneth Lim <limzy.kenneth@gmail.com> (http://designerken.be)",
   "license": "BSD-2-Clause",
-  "repository": { 
+  "repository": {
     "type": "git",
     "url": "https://github.com/limzykenneth/smark.git"
   }

@@ -1,0 +1,2 @@
+/* @license smark.js written by Kenneth Lim <limzy.kenneth@gmail.com> (http://designerken.be)
+   License under the BSD 2-Clause License */
