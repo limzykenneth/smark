@@ -16,5 +16,9 @@
     "uglify-js": "~2.4.0"
   },
   "author": "Kenneth Lim <limzy.kenneth@gmail.com> (http://designerken.be)",
-  "license": "BSD-2-Clause"
+  "license": "BSD-2-Clause",
+  "repository": { 
+    "type": "git",
+    "url": "https://github.com/limzykenneth/smark.git"
+  }
 }
