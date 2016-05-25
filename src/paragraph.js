@@ -27,7 +27,7 @@ module.exports = function(typoMark, tmp) {
     // Mardown style list
     // Ordered list
     var matchedOl = tmp.match(this.olRE);
-    if (matchedOl != null) {
+    if (matchedOl !== null) {
         for (var i = 0; i < matchedOl.length; i++) {
             var matchedLi = matchedOl[i].match(this.olliRE);
             template = "<ol>";

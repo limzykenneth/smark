@@ -41,12 +41,12 @@ smark.generate = function(source, options) {
         // Source is a Youtube link
         tmp = source.replace(this.youtubeRE, "$1");
         result = '<iframe class="smark youtube" src="https://www.youtube.com/embed/' + tmp + '" frameborder="0" width="853" height="480" allowfullscreen></iframe>';
-        if (typeof type === 'undefined') type = "youtube";
+        if (type == 'auto') type = "youtube";
     } else if (this.vimeoRE.test(source)) {
         // Source is a Vimeo link
         tmp = source.replace(this.vimeoRE, "$1");
         result = '<iframe class="smark vimeo" src="https://player.vimeo.com/video/' + tmp + '" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-        if (typeof type === 'undefined') type = "vimeo";
+        if (type == 'auto') type = "vimeo";
     } else if (this.imageRE.test(source)) {
         // Source is an image link
         tmp1 = source.replace(this.imageRE, "$1");
@@ -57,16 +57,16 @@ smark.generate = function(source, options) {
             // tmp3 = source.replace(this.imageLinkRE, "$1");
             tmp3 = this.imageLinkRE.exec(source)[0];
             tmp3 = tmp3.substring(1, tmp3.length - 1);
-            result = '<a href="' + tmp3 + '" target="_blank">' + result + "</a>";
+            result = '<a href="' + tmp3 + '" target=_blank>' + result + "</a>";
         }
-        if (typeof type === 'undefined') type = "image";
+       if (type == 'auto') type = "image";
     } else if (this.htmlRE.test(source)) {
         // Source is a general link valid for iframe
         // Note: This is executed after Youtube and Vimeo test
         //       because this will be a valid match for them as well.
         tmp = source.match(this.htmlRE)[0];
         result = '<iframe class="smark website" src="' + tmp + '" width="853" height="480" frameborder="0"></iframe>';
-        if (typeof type === 'undefined') type = "link";
+        if (type == 'auto') type = "link";
     } else {
         // Parse the string as a paragraph.
         // Typographic changes will be made if noTypo is not passed.
@@ -74,7 +74,7 @@ smark.generate = function(source, options) {
         tmp = this.parseParagraph(typoMark, tmp);
         // Treat the source as just a paragraph of text.
         result = '<p class="smark paragraph">' + tmp + '</p>';
-        if (typeof type === 'undefined') type = "paragraph";
+        if (type == 'auto') type = "paragraph";
     }
 
     return {
@@ -92,26 +92,7 @@ smark.typographicChanges = require("./typography.js");
 smark.parseParagraph = require("./paragraph.js");
 
 module.exports = smark;
-},{"./paragraph.js":3,"./regex.js":4,"./typography.js":5}],2:[function(require,module,exports){
-(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define([], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        // Node. Does not work with strict CommonJS, but
-        // only CommonJS-like environments that support module.exports,
-        // like Node.
-        module.exports = factory();
-    } else {
-        // Browser globals (root is window)
-        root.returnExports = factory();
-  }
-}(this, function () {
-	smark = require("./core.js");
-
-    return smark;
-}));
-},{"./core.js":1}],3:[function(require,module,exports){
+},{"./paragraph.js":2,"./regex.js":3,"./typography.js":4}],2:[function(require,module,exports){
 module.exports = function(typoMark, tmp) {
     // Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
     tmp = this.typographicChanges(typoMark, tmp);
@@ -141,7 +122,7 @@ module.exports = function(typoMark, tmp) {
     // Mardown style list
     // Ordered list
     var matchedOl = tmp.match(this.olRE);
-    if (matchedOl != null) {
+    if (matchedOl !== null) {
         for (var i = 0; i < matchedOl.length; i++) {
             var matchedLi = matchedOl[i].match(this.olliRE);
             template = "<ol>";
@@ -192,7 +173,7 @@ module.exports = function(typoMark, tmp) {
     tmp = tmp.replace(this.hrRE, "<hr />");
     return tmp;
 };
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 var reg = {
 	// Smark is mainly based on using regex.
 	// Regular expressions for matching or replace
@@ -229,45 +210,45 @@ var reg = {
 
 
 	// Parses H6 to H1 tags in reverse order.
-	h6RE: /#{6} (.+?) #{6}/g,
-	h5RE: /#{5} (.+?) #{5}/g,
-	h4RE: /#{4} (.+?) #{4}/g,
-	h3RE: /#{3} (.+?) #{3}/g,
-	h2RE: /#{2} (.+?) #{2}/g,
-	h1RE: /# (.+?) #/g,
+	h6RE: /\s?#{6} (.+?) #{6}\s?/g,
+	h5RE: /\s?#{5} (.+?) #{5}\s?/g,
+	h4RE: /\s?#{4} (.+?) #{4}\s?/g,
+	h3RE: /\s?#{3} (.+?) #{3}\s?/g,
+	h2RE: /\s?#{2} (.+?) #{2}\s?/g,
+	h1RE: /\s?# (.+?) #\s?/g,
 
 
 	// Parse markdown like horizontal rule.
-	hrRE: /\s---\s/g,
+	hrRE: /\s?---\s?/g,
 
 
 	// Parse markdown like block quotes.
-	bqRE: /```(.+?)(?:\[-source:(.+)\])?```/g,
+	bqRE: /```(.+?)(?:\[-source:\s?(.+)\])?```/g,
 
 
 	// Typographic changes. Check regex.txt for usage.
-	dQuotRE: /([[\n \.,;:])\\?"(.+?)\\?"([\n \.,;:\b\]])/g,
-	sQuotRE: /([[\n \.,;:])\\?'(.+?)\\?'([\n \.,;:\b\]])/g,
+	dQuotRE: /(^|\s(?:[ \.,;:\b\[])?)\\?"(.+?)\\?"([ \.,;:\b\]])?/g,
+	sQuotRE: /(^|\s(?:[ \.,;:\b\[])?)\\?'(.+?)\\?'([ \.,;:\b\]])?/g,
 	volRE: /\bvol\.\s\b/gi,
 	pRE: /\bp\.\s\b(?=\d+)/g,
 	cRE: /\bc\.\s\b(?=\d+)/g,
 	flRE: /\bfl\.\s\b(?=\d+)/g,
-	ieRE: /\bi\.e\.\s\b/g,
+	ieRE: /\bi\.e\.\s?\b/g,
 	egRE: /\be\.g\.\s\b/g,
 	aposRE: /([A-Za-z]+)'([a-z]+)/g,
-	endashRE: /(\d+)-(\d+)/g,
+	endashRE: /(.+)\s-\s(.+)/g,
 	elipseRE: /\.{3}/g
 };
 
 module.exports = reg;
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = function(enabled, tmp) {
     tmp = tmp.replace(this.dQuotRE, "$1&#8220;$2&#8221;$3");
     tmp = tmp.replace(this.sQuotRE, "$1&#8216;$2&#8217;$3");
     tmp = tmp.replace(this.volRE, "Vol.");
     tmp = tmp.replace(this.pRE, "p.");
     tmp = tmp.replace(this.cRE, "<i>c.</i>");
-    tmp = tmp.replace(this.flRE, "<i>fl.</fl>");
+    tmp = tmp.replace(this.flRE, "<i>fl.</i>");
     tmp = tmp.replace(this.ieRE, "<i>ie</i> ");
     tmp = tmp.replace(this.egRE, "<i>eg</i> ");
     tmp = tmp.replace(this.aposRE, "$1&#8217;$2");
@@ -275,5 +256,5 @@ module.exports = function(enabled, tmp) {
     tmp = tmp.replace(this.elipseRE, "&#8230;");
     return tmp;
 };
-},{}]},{},[2])(2)
+},{}]},{},[1])(1)
 });

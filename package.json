@@ -5,7 +5,7 @@
   "main": "smark.js",
   "scripts": {
     "test": "mocha -R nyan",
-    "build": "browserify ./src/main.js -s smark | cat header.txt - > smark.js",
+    "build": "browserify ./src/core.js -s smark | cat header.txt - > smark.js",
     "precompile": "npm run build",
     "compile": "uglifyjs smark.js -m --comments 'license' > smark.min.js"
   },

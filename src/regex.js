@@ -34,33 +34,33 @@ var reg = {
 
 
 	// Parses H6 to H1 tags in reverse order.
-	h6RE: /#{6} (.+?) #{6}/g,
-	h5RE: /#{5} (.+?) #{5}/g,
-	h4RE: /#{4} (.+?) #{4}/g,
-	h3RE: /#{3} (.+?) #{3}/g,
-	h2RE: /#{2} (.+?) #{2}/g,
-	h1RE: /# (.+?) #/g,
+	h6RE: /\s?#{6} (.+?) #{6}\s?/g,
+	h5RE: /\s?#{5} (.+?) #{5}\s?/g,
+	h4RE: /\s?#{4} (.+?) #{4}\s?/g,
+	h3RE: /\s?#{3} (.+?) #{3}\s?/g,
+	h2RE: /\s?#{2} (.+?) #{2}\s?/g,
+	h1RE: /\s?# (.+?) #\s?/g,
 
 
 	// Parse markdown like horizontal rule.
-	hrRE: /\s---\s/g,
+	hrRE: /\s?---\s?/g,
 
 
 	// Parse markdown like block quotes.
-	bqRE: /```(.+?)(?:\[-source:(.+)\])?```/g,
+	bqRE: /```(.+?)(?:\[-source:\s?(.+)\])?```/g,
 
 
 	// Typographic changes. Check regex.txt for usage.
-	dQuotRE: /([[\n \.,;:])\\?"(.+?)\\?"([\n \.,;:\b\]])/g,
-	sQuotRE: /([[\n \.,;:])\\?'(.+?)\\?'([\n \.,;:\b\]])/g,
+	dQuotRE: /(^|\s(?:[ \.,;:\b\[])?)\\?"(.+?)\\?"([ \.,;:\b\]])?/g,
+	sQuotRE: /(^|\s(?:[ \.,;:\b\[])?)\\?'(.+?)\\?'([ \.,;:\b\]])?/g,
 	volRE: /\bvol\.\s\b/gi,
 	pRE: /\bp\.\s\b(?=\d+)/g,
 	cRE: /\bc\.\s\b(?=\d+)/g,
 	flRE: /\bfl\.\s\b(?=\d+)/g,
-	ieRE: /\bi\.e\.\s\b/g,
+	ieRE: /\bi\.e\.\s?\b/g,
 	egRE: /\be\.g\.\s\b/g,
 	aposRE: /([A-Za-z]+)'([a-z]+)/g,
-	endashRE: /(\d+)-(\d+)/g,
+	endashRE: /(.+)\s-\s(.+)/g,
 	elipseRE: /\.{3}/g
 };
 

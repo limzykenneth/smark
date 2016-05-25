@@ -38,12 +38,12 @@ smark.generate = function(source, options) {
         // Source is a Youtube link
         tmp = source.replace(this.youtubeRE, "$1");
         result = '<iframe class="smark youtube" src="https://www.youtube.com/embed/' + tmp + '" frameborder="0" width="853" height="480" allowfullscreen></iframe>';
-        if (typeof type === 'undefined') type = "youtube";
+        if (type == 'auto') type = "youtube";
     } else if (this.vimeoRE.test(source)) {
         // Source is a Vimeo link
         tmp = source.replace(this.vimeoRE, "$1");
         result = '<iframe class="smark vimeo" src="https://player.vimeo.com/video/' + tmp + '" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-        if (typeof type === 'undefined') type = "vimeo";
+        if (type == 'auto') type = "vimeo";
     } else if (this.imageRE.test(source)) {
         // Source is an image link
         tmp1 = source.replace(this.imageRE, "$1");
@@ -54,16 +54,16 @@ smark.generate = function(source, options) {
             // tmp3 = source.replace(this.imageLinkRE, "$1");
             tmp3 = this.imageLinkRE.exec(source)[0];
             tmp3 = tmp3.substring(1, tmp3.length - 1);
-            result = '<a href="' + tmp3 + '" target="_blank">' + result + "</a>";
+            result = '<a href="' + tmp3 + '" target=_blank>' + result + "</a>";
         }
-        if (typeof type === 'undefined') type = "image";
+       if (type == 'auto') type = "image";
     } else if (this.htmlRE.test(source)) {
         // Source is a general link valid for iframe
         // Note: This is executed after Youtube and Vimeo test
         //       because this will be a valid match for them as well.
         tmp = source.match(this.htmlRE)[0];
         result = '<iframe class="smark website" src="' + tmp + '" width="853" height="480" frameborder="0"></iframe>';
-        if (typeof type === 'undefined') type = "link";
+        if (type == 'auto') type = "link";
     } else {
         // Parse the string as a paragraph.
         // Typographic changes will be made if noTypo is not passed.
@@ -71,7 +71,7 @@ smark.generate = function(source, options) {
         tmp = this.parseParagraph(typoMark, tmp);
         // Treat the source as just a paragraph of text.
         result = '<p class="smark paragraph">' + tmp + '</p>';
-        if (typeof type === 'undefined') type = "paragraph";
+        if (type == 'auto') type = "paragraph";
     }
 
     return {
