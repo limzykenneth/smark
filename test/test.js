@@ -58,7 +58,7 @@ var sources = {
 
 		{
 			original: "```This is a linked credited blockquote.[-source:[Telescope Time Without Tears](https://www.youtube.com/watch?v=7c0CoXFApnM)]```",
-			expected: '<blockquote><p>This is a linked credited blockquote.</p><footer><a href="https://www.youtube.com/watch?v=7c0CoXFApnM">Telescope Time Without Tears</a></footer></blockquote>```'
+			expected: '<blockquote><p>This is a linked credited blockquote.</p><footer><a href="https://www.youtube.com/watch?v=7c0CoXFApnM">Telescope Time Without Tears</a></footer></blockquote>'
 		}
 	],
 	"lists": [

@@ -22,8 +22,10 @@ var reg = {
 
 	// Parses inline markdown style link into <a> tags.
 	// Replace with <a href="$2">$1</a> to use.
-	linkRE: /\[(.*?)\](?:|-blank) ?\((.+?)\)/g,
-	linkBlankRE: /\[(.*?)\]-blank ?\((.+?)\)/g,
+	linkRE: /\[(?!-)(.*?)\](?:|-blank) ?\((.+?)\)/g,
+	linkBlankRE: /\[(?!-)(.*?)\]-blank ?\((.+?)\)/g,
+	linkBareRE: /\[(?!-)(.*?)\](?:-blank)?/g,
+	linkBareBlankRE: /\[(?!-)(.*?)\](?:-blank)/g,
 
 
 	// Parse inline mardown style list into a list.
