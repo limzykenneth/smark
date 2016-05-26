@@ -398,22 +398,56 @@ describe("Embeded tags: ", function(){
 // Type detection test
 describe("Type detection: ", function(){
 	describe("Youtube", function(){
-		it("should detect type correctly as 'youtube'");
+		it("should detect type correctly as 'youtube'", function(){
+			for (var i=0; i<embededTestCases.youtube.length; i++){
+				assert.equal(smark.generate(embededTestCases.youtube[i].original).type, "youtube");
+			}
+			for (var i=0; i<embededTestCases.youtube.length; i++){
+				assert.equal(smark.generate(embededTestCases.youtube[i].original, {type: "youtube"}).type, "youtube");
+			}
+		});
 	});
 
 	describe("Vimeo", function(){
-		it("should detect type correctly as 'vimeo'");
+		it("should detect type correctly as 'vimeo'", function(){
+			for (var i=0; i<embededTestCases.vimeo.length; i++){
+				assert.equal(smark.generate(embededTestCases.vimeo[i].original).type, "vimeo");
+			}
+			for (var i=0; i<embededTestCases.vimeo.length; i++){
+				assert.equal(smark.generate(embededTestCases.vimeo[i].original, {type: "vimeo"}).type, "vimeo");
+			}
+		});
 	});
 
 	describe("Image", function(){
-		it("should detect type correctly as 'image'");
+		it("should detect type correctly as 'image'", function(){
+			for (var i=0; i<embededTestCases.image.length; i++){
+				assert.equal(smark.generate(embededTestCases.image[i].original).type, "image");
+			}
+			for (var i=0; i<embededTestCases.image.length; i++){
+				assert.equal(smark.generate(embededTestCases.image[i].original, {type: "image"}).type, "image");
+			}
+		});
 	});
 
 	describe("Links", function(){
-		it("should detect type correctly as 'link'");
+		it("should detect type correctly as 'link'", function(){
+			for (var i=0; i<embededTestCases.link.length; i++){
+				assert.equal(smark.generate(embededTestCases.link[i].original).type, "link");
+			}
+			for (var i=0; i<embededTestCases.link.length; i++){
+				assert.equal(smark.generate(embededTestCases.link[i].original, {type: "link"}).type, "link");
+			}
+		});
 	});
 
 	describe("Paragraphs", function(){
-		it("should detect type correctly as 'paragraph'");
+		it("should detect type correctly as 'paragraph'", function(){
+			for (var testCase in paragraphTestCases){
+				for (var i=0; i<paragraphTestCases[testCase].length; i++){
+					assert.equal(smark.generate(paragraphTestCases[testCase][i].original).type, "paragraph");
+				}
+			}
+		});
 	});
 });
