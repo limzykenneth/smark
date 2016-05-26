@@ -1,6 +1,8 @@
 # Smark
 ## A string to HTML parser
 
+[![Build Status](https://travis-ci.org/limzykenneth/smark.svg?branch=master)](https://travis-ci.org/limzykenneth/smark)
+
 Smark is a tiny function library built to parse Javascript strings into HTML markup. Thus, Smark is aimed at people looking to decouple strings from HTML markup so you don't need to have messy HTML markup in strings or even databases storing data for the page. Smark also do typographic changes so the punctuation is used correctly in paragraphs.
 
 Instead of this:
