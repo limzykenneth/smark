@@ -18,7 +18,7 @@ describe("For the sake of sanity,", function(){
 	});
 });
 
-var sources = {
+var paragraphTestCases = {
 	"links": [
 		{
 			original: 'The idea is borrowed from ["Telescope time without tears"](http://arxiv.org/pdf/0906.1943.pdf).',
@@ -188,50 +188,129 @@ var sources = {
 	]
 };
 
+var embededTestCases = {
+	"youtube": [
+		{
+			original: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		},
+		{
+			original: "https://youtu.be/dQw4w9WgXcQ",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		},
+		{
+			original: "http://www.youtube.com/watch?v=dQw4w9WgXcQ",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		},
+		{
+			original: "http://youtu.be/dQw4w9WgXcQ",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		},
+		{
+			original: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		},
+		{
+			original: "www.youtube.com/watch?v=dQw4w9WgXcQ",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		},
+		{
+			original: "youtube.com/watch?v=dQw4w9WgXcQ",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		},
+		{
+			original: "youtu.be/dQw4w9WgXcQ",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		},
+		{
+			original: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be",
+			expected: '<iframe class="smark youtube" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" width="853" height="480" allowfullscreen></iframe>'
+		}
+	],
+	"vimeo": [
+		{
+			original: "https://vimeo.com/87007946",
+			expected: '<iframe class="smark vimeo" src="https://player.vimeo.com/video/87007946" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+		},
+		{
+			original: "http://vimeo.com/87007946",
+			expected: '<iframe class="smark vimeo" src="https://player.vimeo.com/video/87007946" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+		},
+		{
+			original: "vimeo.com/87007946",
+			expected: '<iframe class="smark vimeo" src="https://player.vimeo.com/video/87007946" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+		}
+	],
+	"image": [
+		{
+			original: "http://vignette2.wikia.nocookie.net/bravestwarriors/images/2/2f/CatbugShameCone.jpg",
+			expected: '<img class="smark image" title="" src="http://vignette2.wikia.nocookie.net/bravestwarriors/images/2/2f/CatbugShameCone.jpg">'
+		},
+		{
+			original: 'http://vignette2.wikia.nocookie.net/bravestwarriors/images/2/2f/CatbugShameCone.jpg -title="I\'m Catbug!"',
+			expected: '<img class="smark image" title="I&#8217;m Catbug!" src="http://vignette2.wikia.nocookie.net/bravestwarriors/images/2/2f/CatbugShameCone.jpg">'
+		},
+		{
+			original: 'http://vignette2.wikia.nocookie.net/bravestwarriors/images/2/2f/CatbugShameCone.jpg -title="I\'m Catbug!"(https://www.youtube.com/watch?v=rFWb7DG7zTc)',
+			expected: '<a href="https://www.youtube.com/watch?v=rFWb7DG7zTc" target=_blank><img class="smark image" title="I&#8217;m Catbug!" src="http://vignette2.wikia.nocookie.net/bravestwarriors/images/2/2f/CatbugShameCone.jpg"></a>'
+		}
+	],
+	"link": [
+		{
+			original: "http://motherfuckingwebsite.com/",
+			expected: '<iframe class="smark website" src="http://motherfuckingwebsite.com/" width="853" height="480" frameborder="0"></iframe>'
+		},
+		{
+			original: "mochajs.org/index.html",
+			expected: '<iframe class="smark website" src="mochajs.org/index.html" width="853" height="480" frameborder="0"></iframe>'
+		}
+	]
+};
+
 // HTML output test
 describe("Paragraphs: ", function(){
-	for (var category in sources){
-		for (var i=0; i<sources[category].length; i++){
-			sources[category][i].expected = '<p class="smark paragraph">' + sources[category][i].expected + "</p>";
+	for (var category in paragraphTestCases){
+		for (var i=0; i<paragraphTestCases[category].length; i++){
+			paragraphTestCases[category][i].expected = '<p class="smark paragraph">' + paragraphTestCases[category][i].expected + "</p>";
 		}
 	}
 
 	describe("Links", function(){
 		it("should be parsed into <a> tags.", function(){
-			for (var i=0; i<sources.links.length; i++){
-				assert.equal(smark.generate(sources.links[i].original).html, sources.links[i].expected);
+			for (var i=0; i<paragraphTestCases.links.length; i++){
+				assert.equal(smark.generate(paragraphTestCases.links[i].original).html, paragraphTestCases.links[i].expected);
 			}
 		});
 	});
 
 	describe("Blockquotes", function(){
 		it("should be parsed into <blockquote> tags", function(){
-			for (var i=0; i<sources.blockquotes.length; i++){
-				assert.equal(smark.generate(sources.blockquotes[i].original).html, sources.blockquotes[i].expected);
+			for (var i=0; i<paragraphTestCases.blockquotes.length; i++){
+				assert.equal(smark.generate(paragraphTestCases.blockquotes[i].original).html, paragraphTestCases.blockquotes[i].expected);
 			}
 		});
 	});
 
 	describe("Lists", function(){
 		it("should be parsed into <ul> or <ol> tags", function(){
-			for (var i=0; i<sources.lists.length; i++){
-				assert.equal(smark.generate(sources.lists[i].original).html, sources.lists[i].expected);
+			for (var i=0; i<paragraphTestCases.lists.length; i++){
+				assert.equal(smark.generate(paragraphTestCases.lists[i].original).html, paragraphTestCases.lists[i].expected);
 			}
 		});
 	});
 
 	describe("Headings", function(){
 		it("should be parsed into <h1> to <h6> tags", function(){
-			for (var i=0; i<sources.headings.length; i++){
-				assert.equal(smark.generate(sources.headings[i].original).html, sources.headings[i].expected);
+			for (var i=0; i<paragraphTestCases.headings.length; i++){
+				assert.equal(smark.generate(paragraphTestCases.headings[i].original).html, paragraphTestCases.headings[i].expected);
 			}
 		});
 	});
 
 	describe("Horizontal rules", function(){
 		it("should be parsed into <hr /> tag", function(){
-			for (var i=0; i<sources.horizontalRules.length; i++){
-				assert.equal(smark.generate(sources.horizontalRules[i].original).html, sources.horizontalRules[i].expected);
+			for (var i=0; i<paragraphTestCases.horizontalRules.length; i++){
+				assert.equal(smark.generate(paragraphTestCases.horizontalRules[i].original).html, paragraphTestCases.horizontalRules[i].expected);
 			}
 		});
 	});
@@ -240,45 +319,101 @@ describe("Paragraphs: ", function(){
 	describe("Typographic", function(){
 		describe("N-dashes", function(){
 			it("should be coverted if it means between two things", function(){
-				assert.equal(smark.generate(sources.ndash[0].original).html, sources.ndash[0].expected);
+				assert.equal(smark.generate(paragraphTestCases.ndash[0].original).html, paragraphTestCases.ndash[0].expected);
 			});
 			it("should not be coverted if it link words together", function(){
-				assert.equal(smark.generate(sources.ndash[1].original).html, sources.ndash[1].expected);
+				assert.equal(smark.generate(paragraphTestCases.ndash[1].original).html, paragraphTestCases.ndash[1].expected);
 			});
 		});
 
 		describe("Quotemarks", function(){
 			it("should be converted into HTML entities for proper quotemarks", function(){
-				for (var i=0; i<sources.quotemarks.length; i++){
-					assert.equal(smark.generate(sources.quotemarks[i].original).html, sources.quotemarks[i].expected);
+				for (var i=0; i<paragraphTestCases.quotemarks.length; i++){
+					assert.equal(smark.generate(paragraphTestCases.quotemarks[i].original).html, paragraphTestCases.quotemarks[i].expected);
 				}
 			});
 		});
 
 		describe("Apostrophes", function(){
 			it("should be converted into HTML entities for proper apostrophes", function(){
-				for (var i=0; i<sources.apostrophes.length; i++){
-					assert.equal(smark.generate(sources.apostrophes[i].original).html, sources.apostrophes[i].expected);
+				for (var i=0; i<paragraphTestCases.apostrophes.length; i++){
+					assert.equal(smark.generate(paragraphTestCases.apostrophes[i].original).html, paragraphTestCases.apostrophes[i].expected);
 				}
 			});
 		});
 
 		describe("Ellipses", function(){
 			it("should be converted into HTML entities for proper ellipses", function(){
-				for (var i=0; i<sources.ellipses.length; i++){
-					assert.equal(smark.generate(sources.ellipses[i].original).html, sources.ellipses[i].expected);
+				for (var i=0; i<paragraphTestCases.ellipses.length; i++){
+					assert.equal(smark.generate(paragraphTestCases.ellipses[i].original).html, paragraphTestCases.ellipses[i].expected);
 				}
 			});
 		});
 
 		describe("Concatenations", function(){
 			it("should be formatted properly (standard as per Phil Baines wisdom)", function(){
-				for (var i=0; i<sources.concatenations.length; i++){
-					assert.equal(smark.generate(sources.concatenations[i].original).html, sources.concatenations[i].expected);
+				for (var i=0; i<paragraphTestCases.concatenations.length; i++){
+					assert.equal(smark.generate(paragraphTestCases.concatenations[i].original).html, paragraphTestCases.concatenations[i].expected);
 				}
 			});
 		});
 	});
 });
 
+// Embeded tags test
+describe("Embeded tags: ", function(){
+	describe("Youtube links", function(){
+		it("should be parsed into Youtube's embed link with the right base64 ID", function(){
+			for (var i=0; i<embededTestCases.youtube.length; i++){
+				assert.equal(smark.generate(embededTestCases.youtube[i].original).html, embededTestCases.youtube[i].expected);
+			}
+		});
+	});
+
+	describe("Vimeo links", function(){
+		it("should be parsed into Vimeo's embed link with the right ID", function(){
+			for (var i=0; i<embededTestCases.vimeo.length; i++){
+				assert.equal(smark.generate(embededTestCases.vimeo[i].original).html, embededTestCases.vimeo[i].expected);
+			}
+		});
+	});
+
+	describe("Image links", function(){
+		it("should be parsed into <img> tags", function(){
+			for (var i=0; i<embededTestCases.image.length; i++){
+				assert.equal(smark.generate(embededTestCases.image[i].original).html, embededTestCases.image[i].expected);
+			}
+		});
+	});
+
+	describe("General links", function(){
+		it("should be parsed into <iframe> tags", function(){
+			for (var i=0; i<embededTestCases.link.length; i++){
+				assert.equal(smark.generate(embededTestCases.link[i].original).html, embededTestCases.link[i].expected);
+			}
+		});
+	});
+});
+
 // Type detection test
+describe("Type detection: ", function(){
+	describe("Youtube", function(){
+		it("should detect type correctly as 'youtube'");
+	});
+
+	describe("Vimeo", function(){
+		it("should detect type correctly as 'vimeo'");
+	});
+
+	describe("Image", function(){
+		it("should detect type correctly as 'image'");
+	});
+
+	describe("Links", function(){
+		it("should detect type correctly as 'link'");
+	});
+
+	describe("Paragraphs", function(){
+		it("should detect type correctly as 'paragraph'");
+	});
+});
