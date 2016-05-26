@@ -1,0 +1,10 @@
+language: javascript
+language: node_js
+node_js:
+  - "5.1"
+  - "4.2"
+  - "4.1"
+  - "0.12"
+  - "5"
+  - "4"
+script: phpunit Test.php
