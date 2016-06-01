@@ -401,6 +401,7 @@ describe("Type detection: ", function(){
 		it("should detect type correctly as 'youtube'", function(){
 			for (var i=0; i<embededTestCases.youtube.length; i++){
 				assert.equal(smark.generate(embededTestCases.youtube[i].original).type, "youtube");
+				assert.equal(smark.typeIs(embededTestCases.youtube[i].original), "youtube");
 			}
 			for (var i=0; i<embededTestCases.youtube.length; i++){
 				assert.equal(smark.generate(embededTestCases.youtube[i].original, {type: "youtube"}).type, "youtube");
@@ -412,6 +413,7 @@ describe("Type detection: ", function(){
 		it("should detect type correctly as 'vimeo'", function(){
 			for (var i=0; i<embededTestCases.vimeo.length; i++){
 				assert.equal(smark.generate(embededTestCases.vimeo[i].original).type, "vimeo");
+				assert.equal(smark.typeIs(embededTestCases.vimeo[i].original), "vimeo");
 			}
 			for (var i=0; i<embededTestCases.vimeo.length; i++){
 				assert.equal(smark.generate(embededTestCases.vimeo[i].original, {type: "vimeo"}).type, "vimeo");
@@ -423,6 +425,7 @@ describe("Type detection: ", function(){
 		it("should detect type correctly as 'image'", function(){
 			for (var i=0; i<embededTestCases.image.length; i++){
 				assert.equal(smark.generate(embededTestCases.image[i].original).type, "image");
+				assert.equal(smark.typeIs(embededTestCases.image[i].original), "image");
 			}
 			for (var i=0; i<embededTestCases.image.length; i++){
 				assert.equal(smark.generate(embededTestCases.image[i].original, {type: "image"}).type, "image");
@@ -434,6 +437,7 @@ describe("Type detection: ", function(){
 		it("should detect type correctly as 'link'", function(){
 			for (var i=0; i<embededTestCases.link.length; i++){
 				assert.equal(smark.generate(embededTestCases.link[i].original).type, "link");
+				assert.equal(smark.typeIs(embededTestCases.link[i].original), "link");
 			}
 			for (var i=0; i<embededTestCases.link.length; i++){
 				assert.equal(smark.generate(embededTestCases.link[i].original, {type: "link"}).type, "link");
@@ -446,6 +450,7 @@ describe("Type detection: ", function(){
 			for (var testCase in paragraphTestCases){
 				for (var i=0; i<paragraphTestCases[testCase].length; i++){
 					assert.equal(smark.generate(paragraphTestCases[testCase][i].original).type, "paragraph");
+					assert.equal(smark.typeIs(paragraphTestCases[testCase][i].original), "paragraph");
 				}
 			}
 		});

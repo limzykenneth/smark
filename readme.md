@@ -65,8 +65,3 @@ This is mostly a note-to-self section. If you have problems using Smark, it migh
 
 1. CLI use
 1. Documentation
-1. Publish to npm
-
-Expected problems:
-
-1. Option passing is too hard. (Might only ever be solved in 2.0)
