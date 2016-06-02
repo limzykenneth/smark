@@ -120,6 +120,11 @@ var paragraphTestCases = {
 		{
 			original: "Jean-Charles, chevalier de Borda",
 			expected: "Jean-Charles, chevalier de Borda"
+		},
+
+		{
+			original: "Melancholy graphic design student expired in 2016 who makes love and art to postpone her suicide. Taipei - Kaohsiung - London, \"the eternal flight of myself from myself\".",
+			expected: "Melancholy graphic design student expired in 2016 who makes love and art to postpone her suicide. Taipei&#8211;Kaohsiung&#8211;London, &#8220;the eternal flight of myself from myself&#8221;."
 		}
 	],
 	"quotemarks": [
