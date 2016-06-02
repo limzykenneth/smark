@@ -77,7 +77,7 @@ var paragraphTestCases = {
 			original: "# heading 1 #",
 			expected: '<h1>heading 1</h1>'
 		},
-		
+
 		{
 			original: "## heading 2 ##",
 			expected: '<h2>heading 2</h2>'
@@ -138,7 +138,7 @@ var paragraphTestCases = {
 			original: "It's a nice day.",
 			expected: "It&#8217;s a nice day."
 		},
-		
+
 		{
 			original: "Don't litter, you'll regret it.",
 			expected: "Don&#8217;t litter, you&#8217;ll regret it."
@@ -170,7 +170,7 @@ var paragraphTestCases = {
 			original: "Stephen of Blois (c. 1092/6 - 25 October 1154)",
 			expected: "Stephen of Blois (<i>c.</i>1092/6&#8211;25 October 1154)"
 		},
-		
+
 		{
 			original: "Floruit, abbreviated fl. 1999, in Latin meaning 'he/she flourished'.",
 			expected: "Floruit, abbreviated <i>fl.</i>1999, in Latin meaning &#8216;he/she flourished&#8217;."
@@ -401,7 +401,6 @@ describe("Type detection: ", function(){
 		it("should detect type correctly as 'youtube'", function(){
 			for (var i=0; i<embededTestCases.youtube.length; i++){
 				assert.equal(smark.generate(embededTestCases.youtube[i].original).type, "youtube");
-				assert.equal(smark.typeIs(embededTestCases.youtube[i].original), "youtube");
 			}
 			for (var i=0; i<embededTestCases.youtube.length; i++){
 				assert.equal(smark.generate(embededTestCases.youtube[i].original, {type: "youtube"}).type, "youtube");
@@ -413,7 +412,6 @@ describe("Type detection: ", function(){
 		it("should detect type correctly as 'vimeo'", function(){
 			for (var i=0; i<embededTestCases.vimeo.length; i++){
 				assert.equal(smark.generate(embededTestCases.vimeo[i].original).type, "vimeo");
-				assert.equal(smark.typeIs(embededTestCases.vimeo[i].original), "vimeo");
 			}
 			for (var i=0; i<embededTestCases.vimeo.length; i++){
 				assert.equal(smark.generate(embededTestCases.vimeo[i].original, {type: "vimeo"}).type, "vimeo");
@@ -425,7 +423,6 @@ describe("Type detection: ", function(){
 		it("should detect type correctly as 'image'", function(){
 			for (var i=0; i<embededTestCases.image.length; i++){
 				assert.equal(smark.generate(embededTestCases.image[i].original).type, "image");
-				assert.equal(smark.typeIs(embededTestCases.image[i].original), "image");
 			}
 			for (var i=0; i<embededTestCases.image.length; i++){
 				assert.equal(smark.generate(embededTestCases.image[i].original, {type: "image"}).type, "image");
@@ -437,7 +434,6 @@ describe("Type detection: ", function(){
 		it("should detect type correctly as 'link'", function(){
 			for (var i=0; i<embededTestCases.link.length; i++){
 				assert.equal(smark.generate(embededTestCases.link[i].original).type, "link");
-				assert.equal(smark.typeIs(embededTestCases.link[i].original), "link");
 			}
 			for (var i=0; i<embededTestCases.link.length; i++){
 				assert.equal(smark.generate(embededTestCases.link[i].original, {type: "link"}).type, "link");
@@ -450,7 +446,6 @@ describe("Type detection: ", function(){
 			for (var testCase in paragraphTestCases){
 				for (var i=0; i<paragraphTestCases[testCase].length; i++){
 					assert.equal(smark.generate(paragraphTestCases[testCase][i].original).type, "paragraph");
-					assert.equal(smark.typeIs(paragraphTestCases[testCase][i].original), "paragraph");
 				}
 			}
 		});
