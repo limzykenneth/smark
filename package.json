@@ -2,7 +2,7 @@
   "name": "smark",
   "version": "1.1.2",
   "description": "Smart parser from strings into HTML",
-  "main": "smark.js",
+  "main": "smark.min.js",
   "scripts": {
     "test": "mocha -R nyan",
     "build": "browserify ./src/core.js -s smark | cat header.txt - > smark.js",
