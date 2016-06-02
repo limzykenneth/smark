@@ -13,7 +13,7 @@ smark.typographicChanges = require("./typography.js");
 // See note.txt for more info.
 smark.parseParagraph = require("./paragraph.js");
 
-smark.generate = function(source, options) { 
+smark.generate = function(source, options) {
     // The resulting html will be stored in this
     var result = "";
 
@@ -82,7 +82,9 @@ smark.generate = function(source, options) {
             case "image":
                 var tmp1 = str.replace(that.imageRE, "$1");
                 var tmp2 = str.replace(that.imageRE, "$2");
-                tmp2 = that.typographicChanges(true, tmp2);
+                if (typoMark){
+	                tmp2 = that.typographicChanges(tmp2);
+	            }
                 ret = '<img class="smark image" title="' + tmp2 + '" src="' + tmp1 + '">';
                 if (that.imageLinkRE.test(str)) {
                     var tmp3 = that.imageLinkRE.exec(str)[0];
@@ -118,8 +120,10 @@ module.exports = smark;
 var reg = require("./regex.js");
 module.exports = function(typoMark, tmp) {
     // Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
-    tmp = this.typographicChanges(typoMark, tmp);
-    
+    if (typoMark){
+	    tmp = this.typographicChanges(tmp);
+	}
+
 
     // Markdown style syntax will be catch and converted.
     // Markdown style links
@@ -303,7 +307,7 @@ typeIs = function(str){
 
 module.exports = typeIs;
 },{"./regex.js":3}],5:[function(require,module,exports){
-module.exports = function(enabled, tmp) {
+module.exports = function(tmp) {
     tmp = tmp.replace(this.dQuotRE, "$1&#8220;$2&#8221;$3");
     tmp = tmp.replace(this.sQuotRE, "$1&#8216;$2&#8217;$3");
     tmp = tmp.replace(this.volRE, "Vol.");

@@ -10,7 +10,7 @@ smark.typographicChanges = require("./typography.js");
 // See note.txt for more info.
 smark.parseParagraph = require("./paragraph.js");
 
-smark.generate = function(source, options) { 
+smark.generate = function(source, options) {
     // The resulting html will be stored in this
     var result = "";
 
@@ -79,7 +79,9 @@ smark.generate = function(source, options) {
             case "image":
                 var tmp1 = str.replace(that.imageRE, "$1");
                 var tmp2 = str.replace(that.imageRE, "$2");
-                tmp2 = that.typographicChanges(true, tmp2);
+                if (typoMark){
+	                tmp2 = that.typographicChanges(tmp2);
+	            }
                 ret = '<img class="smark image" title="' + tmp2 + '" src="' + tmp1 + '">';
                 if (that.imageLinkRE.test(str)) {
                     var tmp3 = that.imageLinkRE.exec(str)[0];

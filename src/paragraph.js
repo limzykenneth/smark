@@ -1,8 +1,10 @@
 var reg = require("./regex.js");
 module.exports = function(typoMark, tmp) {
     // Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
-    tmp = this.typographicChanges(typoMark, tmp);
-    
+    if (typoMark){
+	    tmp = this.typographicChanges(tmp);
+	}
+
 
     // Markdown style syntax will be catch and converted.
     // Markdown style links

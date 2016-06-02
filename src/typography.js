@@ -1,4 +1,4 @@
-module.exports = function(enabled, tmp) {
+module.exports = function(tmp) {
     tmp = tmp.replace(this.dQuotRE, "$1&#8220;$2&#8221;$3");
     tmp = tmp.replace(this.sQuotRE, "$1&#8216;$2&#8217;$3");
     tmp = tmp.replace(this.volRE, "Vol.");
