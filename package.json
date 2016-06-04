@@ -7,7 +7,8 @@
     "test": "mocha -R nyan",
     "build": "browserify ./src/core.js -s smark | cat header.txt - > smark.js",
     "precompile": "npm run build",
-    "compile": "uglifyjs smark.js -m --comments 'license' > smark.min.js"
+    "compile": "uglifyjs smark.js -m --comments 'license' > smark.min.js",
+    "postcompile": "npm test"
   },
   "keywords": [
     "parse",

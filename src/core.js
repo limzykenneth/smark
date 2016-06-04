@@ -23,7 +23,7 @@ smark.generate = function(source, options) {
     for (var i in options){
     	for (var j in opt){
     		if (i == j){
-    			opt.j = options.i;
+    			opt[j] = options[i];
     		}
     	}
     }

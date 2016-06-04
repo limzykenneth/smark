@@ -447,7 +447,7 @@ describe("Type detection: ", function(){
 				assert.equal(smark.generate(embededTestCases.link[i].original).type, "link");
 			}
 			for (var i=0; i<embededTestCases.link.length; i++){
-				assert.equal(smark.generate(embededTestCases.link[i].original, {type: "link"}).type, "link");
+				assert.equal(smark.generate(embededTestCases.youtube[i].original, {type: "link"}).type, "link");
 			}
 		});
 	});
