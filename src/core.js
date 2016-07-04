@@ -1,30 +1,29 @@
 var smark = require("./regex.js");
 
-// Default options
-smark.options = {
-	"type": "auto",
-	"typography": true
-};
+// Type detection
+smark.typeIs = require("./typeIs.js");
+
+// Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
+smark.typographicChanges = require("./typography.js");
+
+// Parse the string as a paragraph.
+// See note.txt for more info.
+smark.parseParagraph = require("./paragraph.js");
 
 smark.generate = function(source, options) {
-	// Catching error in options
-	// if(typeof options.type !== 'string') console.warn("'type' option only accepts string.");
-	// if(typeof options.typography !== 'boolean') console.warn("'typopgraphy' option only accepts boolean.");
-
-    
-    // Temporary variable to store source string for parsing
-    var tmp = source;
     // The resulting html will be stored in this
     var result = "";
 
-
-    // Make a copy of the global options
-    var opt = this.options;
+    // Default options
+    var opt = {
+        "type": "auto",
+        "typography": true
+    };
     // Modify the options according to user passed in value
     for (var i in options){
     	for (var j in opt){
     		if (i == j){
-    			opt.j = options.i;
+    			opt[j] = options[i];
     		}
     	}
     }
@@ -33,59 +32,84 @@ smark.generate = function(source, options) {
     // Parse typographic marks are on by default
     var typoMark = opt.typography;
 
-
-    if (this.youtubeRE.test(source)) {
-        // Source is a Youtube link
-        tmp = source.replace(this.youtubeRE, "$1");
-        result = '<iframe class="smark youtube" src="https://www.youtube.com/embed/' + tmp + '" frameborder="0" width="853" height="480" allowfullscreen></iframe>';
-        if (type == 'auto') type = "youtube";
-    } else if (this.vimeoRE.test(source)) {
-        // Source is a Vimeo link
-        tmp = source.replace(this.vimeoRE, "$1");
-        result = '<iframe class="smark vimeo" src="https://player.vimeo.com/video/' + tmp + '" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
-        if (type == 'auto') type = "vimeo";
-    } else if (this.imageRE.test(source)) {
-        // Source is an image link
-        tmp1 = source.replace(this.imageRE, "$1");
-        tmp2 = source.replace(this.imageRE, "$2");
-        tmp2 = this.typographicChanges(true, tmp2);
-        result = '<img class="smark image" title="' + tmp2 + '" src="' + tmp1 + '">';
-        if (this.imageLinkRE.test(source)) {
-            // tmp3 = source.replace(this.imageLinkRE, "$1");
-            tmp3 = this.imageLinkRE.exec(source)[0];
-            tmp3 = tmp3.substring(1, tmp3.length - 1);
-            result = '<a href="' + tmp3 + '" target=_blank>' + result + "</a>";
+    if (type == "auto"){
+        if (this.typeIs(source) == "youtube") {
+            // Source is a Youtube link
+            type = "youtube";
+        } else if (this.typeIs(source) == "vimeo") {
+            // Source is a Vimeo link
+            type = "vimeo";
+        } else if (this.typeIs(source) == "image") {
+            // Source is an image link
+            type = "image";
+        } else if (this.typeIs(source) == "link") {
+            // Source is a general link valid for iframe
+            type = "link";
+        } else if (this.typeIs(source) == "paragraph") {
+            // Parse the string as a paragraph.
+            type = "paragraph";
         }
-       if (type == 'auto') type = "image";
-    } else if (this.htmlRE.test(source)) {
-        // Source is a general link valid for iframe
-        // Note: This is executed after Youtube and Vimeo test
-        //       because this will be a valid match for them as well.
-        tmp = source.match(this.htmlRE)[0];
-        result = '<iframe class="smark website" src="' + tmp + '" width="853" height="480" frameborder="0"></iframe>';
-        if (type == 'auto') type = "link";
-    } else {
-        // Parse the string as a paragraph.
-        // Typographic changes will be made if noTypo is not passed.
-        // Markdown style syntax will be converted as well.
-        tmp = this.parseParagraph(typoMark, tmp);
-        // Treat the source as just a paragraph of text.
-        result = '<p class="smark paragraph">' + tmp + '</p>';
-        if (type == 'auto') type = "paragraph";
+    }else{
+        type = opt.type;
     }
+
+    result = parse(source, type);
 
     return {
         html: result,
         type: type
     };
+
+    // parse() don't care about whether the type for str make sense or not,
+    // it just parse.
+    function parse(str, type){
+        var ret;
+        var that = smark;
+        switch(type){
+            case "youtube":
+                str = str.replace(that.youtubeRE, "$1");
+                ret = '<iframe class="smark youtube" src="https://www.youtube.com/embed/' + str + '" frameborder="0" width="853" height="480" allowfullscreen></iframe>';
+                break;
+
+            case "vimeo":
+                str = str.replace(that.vimeoRE, "$1");
+                ret = '<iframe class="smark vimeo" src="https://player.vimeo.com/video/' + str + '" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+                break;
+
+            case "image":
+                var tmp1 = str.replace(that.imageRE, "$1");
+                var tmp2 = str.replace(that.imageRE, "$2");
+                if (typoMark){
+	                tmp2 = that.typographicChanges(tmp2);
+	            }
+                ret = '<img class="smark image" title="' + tmp2 + '" src="' + tmp1 + '">';
+                if (that.imageLinkRE.test(str)) {
+                    var tmp3 = that.imageLinkRE.exec(str)[0];
+                    tmp3 = tmp3.substring(1, tmp3.length - 1);
+                    ret = '<a href="' + tmp3 + '" target=_blank>' + ret + "</a>";
+                }
+                break;
+
+            case "link":
+                // Note: This is executed after Youtube and Vimeo test
+                //       because this will be a valid match for them as well.
+                str = str.match(that.htmlRE)[0];
+                ret = '<iframe class="smark website" src="' + str + '" width="853" height="480" frameborder="0"></iframe>';
+                break;
+
+            case "paragraph":
+                // Typographic changes will be made if noTypo is not passed.
+                // Markdown style syntax will be converted as well.
+                str = that.parseParagraph(typoMark, str);
+                // Treat the source as just a paragraph of text.
+                ret = '<p class="smark paragraph">' + str + '</p>';
+                break;
+
+            default:
+                ret = "";
+        }
+        return ret;
+    }
 };
-
-
-// Typographic changes will occur here before parsing into html so as not to mess up html quote marks.
-smark.typographicChanges = require("./typography.js");
-
-// Parse the string as a paragraph.
-// See note.txt for more info.
-smark.parseParagraph = require("./paragraph.js");
 
 module.exports = smark;

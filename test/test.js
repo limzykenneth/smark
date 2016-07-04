@@ -77,7 +77,7 @@ var paragraphTestCases = {
 			original: "# heading 1 #",
 			expected: '<h1>heading 1</h1>'
 		},
-		
+
 		{
 			original: "## heading 2 ##",
 			expected: '<h2>heading 2</h2>'
@@ -120,6 +120,11 @@ var paragraphTestCases = {
 		{
 			original: "Jean-Charles, chevalier de Borda",
 			expected: "Jean-Charles, chevalier de Borda"
+		},
+
+		{
+			original: "Melancholy graphic design student expired in 2016 who makes love and art to postpone her suicide. Taipei - Kaohsiung - London, \"the eternal flight of myself from myself\".",
+			expected: "Melancholy graphic design student expired in 2016 who makes love and art to postpone her suicide. Taipei&#8211;Kaohsiung&#8211;London, &#8220;the eternal flight of myself from myself&#8221;."
 		}
 	],
 	"quotemarks": [
@@ -138,7 +143,7 @@ var paragraphTestCases = {
 			original: "It's a nice day.",
 			expected: "It&#8217;s a nice day."
 		},
-		
+
 		{
 			original: "Don't litter, you'll regret it.",
 			expected: "Don&#8217;t litter, you&#8217;ll regret it."
@@ -170,7 +175,7 @@ var paragraphTestCases = {
 			original: "Stephen of Blois (c. 1092/6 - 25 October 1154)",
 			expected: "Stephen of Blois (<i>c.</i>1092/6&#8211;25 October 1154)"
 		},
-		
+
 		{
 			original: "Floruit, abbreviated fl. 1999, in Latin meaning 'he/she flourished'.",
 			expected: "Floruit, abbreviated <i>fl.</i>1999, in Latin meaning &#8216;he/she flourished&#8217;."
@@ -271,14 +276,14 @@ var embededTestCases = {
 describe("Paragraphs: ", function(){
 	for (var category in paragraphTestCases){
 		for (var i=0; i<paragraphTestCases[category].length; i++){
-			paragraphTestCases[category][i].expected = '<p class="smark paragraph">' + paragraphTestCases[category][i].expected + "</p>";
+			paragraphTestCases[category][i].expectedWithP = '<p class="smark paragraph">' + paragraphTestCases[category][i].expected + "</p>";
 		}
 	}
 
 	describe("Links", function(){
 		it("should be parsed into <a> tags.", function(){
 			for (var i=0; i<paragraphTestCases.links.length; i++){
-				assert.equal(smark.generate(paragraphTestCases.links[i].original).html, paragraphTestCases.links[i].expected);
+				assert.equal(smark.generate(paragraphTestCases.links[i].original).html, paragraphTestCases.links[i].expectedWithP);
 			}
 		});
 	});
@@ -286,7 +291,7 @@ describe("Paragraphs: ", function(){
 	describe("Blockquotes", function(){
 		it("should be parsed into <blockquote> tags", function(){
 			for (var i=0; i<paragraphTestCases.blockquotes.length; i++){
-				assert.equal(smark.generate(paragraphTestCases.blockquotes[i].original).html, paragraphTestCases.blockquotes[i].expected);
+				assert.equal(smark.generate(paragraphTestCases.blockquotes[i].original).html, paragraphTestCases.blockquotes[i].expectedWithP);
 			}
 		});
 	});
@@ -294,7 +299,7 @@ describe("Paragraphs: ", function(){
 	describe("Lists", function(){
 		it("should be parsed into <ul> or <ol> tags", function(){
 			for (var i=0; i<paragraphTestCases.lists.length; i++){
-				assert.equal(smark.generate(paragraphTestCases.lists[i].original).html, paragraphTestCases.lists[i].expected);
+				assert.equal(smark.generate(paragraphTestCases.lists[i].original).html, paragraphTestCases.lists[i].expectedWithP);
 			}
 		});
 	});
@@ -302,7 +307,7 @@ describe("Paragraphs: ", function(){
 	describe("Headings", function(){
 		it("should be parsed into <h1> to <h6> tags", function(){
 			for (var i=0; i<paragraphTestCases.headings.length; i++){
-				assert.equal(smark.generate(paragraphTestCases.headings[i].original).html, paragraphTestCases.headings[i].expected);
+				assert.equal(smark.generate(paragraphTestCases.headings[i].original).html, paragraphTestCases.headings[i].expectedWithP);
 			}
 		});
 	});
@@ -310,7 +315,7 @@ describe("Paragraphs: ", function(){
 	describe("Horizontal rules", function(){
 		it("should be parsed into <hr /> tag", function(){
 			for (var i=0; i<paragraphTestCases.horizontalRules.length; i++){
-				assert.equal(smark.generate(paragraphTestCases.horizontalRules[i].original).html, paragraphTestCases.horizontalRules[i].expected);
+				assert.equal(smark.generate(paragraphTestCases.horizontalRules[i].original).html, paragraphTestCases.horizontalRules[i].expectedWithP);
 			}
 		});
 	});
@@ -319,17 +324,20 @@ describe("Paragraphs: ", function(){
 	describe("Typographic", function(){
 		describe("N-dashes", function(){
 			it("should be coverted if it means between two things", function(){
-				assert.equal(smark.generate(paragraphTestCases.ndash[0].original).html, paragraphTestCases.ndash[0].expected);
+				assert.equal(smark.generate(paragraphTestCases.ndash[0].original).html, paragraphTestCases.ndash[0].expectedWithP);
+				assert.equal(smark.typographicChanges(paragraphTestCases.ndash[0].original), paragraphTestCases.ndash[0].expected);
 			});
 			it("should not be coverted if it link words together", function(){
-				assert.equal(smark.generate(paragraphTestCases.ndash[1].original).html, paragraphTestCases.ndash[1].expected);
+				assert.equal(smark.generate(paragraphTestCases.ndash[1].original).html, paragraphTestCases.ndash[1].expectedWithP);
+				assert.equal(smark.typographicChanges(paragraphTestCases.ndash[1].original), paragraphTestCases.ndash[1].expected);
 			});
 		});
 
 		describe("Quotemarks", function(){
 			it("should be converted into HTML entities for proper quotemarks", function(){
 				for (var i=0; i<paragraphTestCases.quotemarks.length; i++){
-					assert.equal(smark.generate(paragraphTestCases.quotemarks[i].original).html, paragraphTestCases.quotemarks[i].expected);
+					assert.equal(smark.generate(paragraphTestCases.quotemarks[i].original).html, paragraphTestCases.quotemarks[i].expectedWithP);
+					assert.equal(smark.typographicChanges(paragraphTestCases.quotemarks[i].original), paragraphTestCases.quotemarks[i].expected);
 				}
 			});
 		});
@@ -337,7 +345,8 @@ describe("Paragraphs: ", function(){
 		describe("Apostrophes", function(){
 			it("should be converted into HTML entities for proper apostrophes", function(){
 				for (var i=0; i<paragraphTestCases.apostrophes.length; i++){
-					assert.equal(smark.generate(paragraphTestCases.apostrophes[i].original).html, paragraphTestCases.apostrophes[i].expected);
+					assert.equal(smark.generate(paragraphTestCases.apostrophes[i].original).html, paragraphTestCases.apostrophes[i].expectedWithP);
+					assert.equal(smark.typographicChanges(paragraphTestCases.apostrophes[i].original), paragraphTestCases.apostrophes[i].expected);
 				}
 			});
 		});
@@ -345,7 +354,8 @@ describe("Paragraphs: ", function(){
 		describe("Ellipses", function(){
 			it("should be converted into HTML entities for proper ellipses", function(){
 				for (var i=0; i<paragraphTestCases.ellipses.length; i++){
-					assert.equal(smark.generate(paragraphTestCases.ellipses[i].original).html, paragraphTestCases.ellipses[i].expected);
+					assert.equal(smark.generate(paragraphTestCases.ellipses[i].original).html, paragraphTestCases.ellipses[i].expectedWithP);
+					assert.equal(smark.typographicChanges(paragraphTestCases.ellipses[i].original), paragraphTestCases.ellipses[i].expected);
 				}
 			});
 		});
@@ -353,7 +363,8 @@ describe("Paragraphs: ", function(){
 		describe("Concatenations", function(){
 			it("should be formatted properly (standard as per Phil Baines wisdom)", function(){
 				for (var i=0; i<paragraphTestCases.concatenations.length; i++){
-					assert.equal(smark.generate(paragraphTestCases.concatenations[i].original).html, paragraphTestCases.concatenations[i].expected);
+					assert.equal(smark.generate(paragraphTestCases.concatenations[i].original).html, paragraphTestCases.concatenations[i].expectedWithP);
+					assert.equal(smark.typographicChanges(paragraphTestCases.concatenations[i].original), paragraphTestCases.concatenations[i].expected);
 				}
 			});
 		});
@@ -436,7 +447,7 @@ describe("Type detection: ", function(){
 				assert.equal(smark.generate(embededTestCases.link[i].original).type, "link");
 			}
 			for (var i=0; i<embededTestCases.link.length; i++){
-				assert.equal(smark.generate(embededTestCases.link[i].original, {type: "link"}).type, "link");
+				assert.equal(smark.generate(embededTestCases.youtube[i].original, {type: "link"}).type, "link");
 			}
 		});
 	});
