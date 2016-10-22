@@ -274,15 +274,15 @@ var embededTestCases = {
 
 // HTML output test
 describe("Paragraphs: ", function(){
-	for (var category in paragraphTestCases){
-		for (var i=0; i<paragraphTestCases[category].length; i++){
+	for (let category in paragraphTestCases){
+		for (let i=0; i<paragraphTestCases[category].length; i++){
 			paragraphTestCases[category][i].expectedWithP = '<p class="smark paragraph">' + paragraphTestCases[category][i].expected + "</p>";
 		}
 	}
 
 	describe("Links", function(){
 		it("should be parsed into <a> tags.", function(){
-			for (var i=0; i<paragraphTestCases.links.length; i++){
+			for (let i=0; i<paragraphTestCases.links.length; i++){
 				assert.equal(smark.generate(paragraphTestCases.links[i].original).html, paragraphTestCases.links[i].expectedWithP);
 			}
 		});
@@ -290,7 +290,7 @@ describe("Paragraphs: ", function(){
 
 	describe("Blockquotes", function(){
 		it("should be parsed into <blockquote> tags", function(){
-			for (var i=0; i<paragraphTestCases.blockquotes.length; i++){
+			for (let i=0; i<paragraphTestCases.blockquotes.length; i++){
 				assert.equal(smark.generate(paragraphTestCases.blockquotes[i].original).html, paragraphTestCases.blockquotes[i].expectedWithP);
 			}
 		});
@@ -298,7 +298,7 @@ describe("Paragraphs: ", function(){
 
 	describe("Lists", function(){
 		it("should be parsed into <ul> or <ol> tags", function(){
-			for (var i=0; i<paragraphTestCases.lists.length; i++){
+			for (let i=0; i<paragraphTestCases.lists.length; i++){
 				assert.equal(smark.generate(paragraphTestCases.lists[i].original).html, paragraphTestCases.lists[i].expectedWithP);
 			}
 		});
@@ -306,7 +306,7 @@ describe("Paragraphs: ", function(){
 
 	describe("Headings", function(){
 		it("should be parsed into <h1> to <h6> tags", function(){
-			for (var i=0; i<paragraphTestCases.headings.length; i++){
+			for (let i=0; i<paragraphTestCases.headings.length; i++){
 				assert.equal(smark.generate(paragraphTestCases.headings[i].original).html, paragraphTestCases.headings[i].expectedWithP);
 			}
 		});
@@ -314,7 +314,7 @@ describe("Paragraphs: ", function(){
 
 	describe("Horizontal rules", function(){
 		it("should be parsed into <hr /> tag", function(){
-			for (var i=0; i<paragraphTestCases.horizontalRules.length; i++){
+			for (let i=0; i<paragraphTestCases.horizontalRules.length; i++){
 				assert.equal(smark.generate(paragraphTestCases.horizontalRules[i].original).html, paragraphTestCases.horizontalRules[i].expectedWithP);
 			}
 		});
@@ -335,7 +335,7 @@ describe("Paragraphs: ", function(){
 
 		describe("Quotemarks", function(){
 			it("should be converted into HTML entities for proper quotemarks", function(){
-				for (var i=0; i<paragraphTestCases.quotemarks.length; i++){
+				for (let i=0; i<paragraphTestCases.quotemarks.length; i++){
 					assert.equal(smark.generate(paragraphTestCases.quotemarks[i].original).html, paragraphTestCases.quotemarks[i].expectedWithP);
 					assert.equal(smark.typographicChanges(paragraphTestCases.quotemarks[i].original), paragraphTestCases.quotemarks[i].expected);
 				}
@@ -344,7 +344,7 @@ describe("Paragraphs: ", function(){
 
 		describe("Apostrophes", function(){
 			it("should be converted into HTML entities for proper apostrophes", function(){
-				for (var i=0; i<paragraphTestCases.apostrophes.length; i++){
+				for (let i=0; i<paragraphTestCases.apostrophes.length; i++){
 					assert.equal(smark.generate(paragraphTestCases.apostrophes[i].original).html, paragraphTestCases.apostrophes[i].expectedWithP);
 					assert.equal(smark.typographicChanges(paragraphTestCases.apostrophes[i].original), paragraphTestCases.apostrophes[i].expected);
 				}
@@ -353,7 +353,7 @@ describe("Paragraphs: ", function(){
 
 		describe("Ellipses", function(){
 			it("should be converted into HTML entities for proper ellipses", function(){
-				for (var i=0; i<paragraphTestCases.ellipses.length; i++){
+				for (let i=0; i<paragraphTestCases.ellipses.length; i++){
 					assert.equal(smark.generate(paragraphTestCases.ellipses[i].original).html, paragraphTestCases.ellipses[i].expectedWithP);
 					assert.equal(smark.typographicChanges(paragraphTestCases.ellipses[i].original), paragraphTestCases.ellipses[i].expected);
 				}
@@ -362,7 +362,7 @@ describe("Paragraphs: ", function(){
 
 		describe("Concatenations", function(){
 			it("should be formatted properly (standard as per Phil Baines wisdom)", function(){
-				for (var i=0; i<paragraphTestCases.concatenations.length; i++){
+				for (let i=0; i<paragraphTestCases.concatenations.length; i++){
 					assert.equal(smark.generate(paragraphTestCases.concatenations[i].original).html, paragraphTestCases.concatenations[i].expectedWithP);
 					assert.equal(smark.typographicChanges(paragraphTestCases.concatenations[i].original), paragraphTestCases.concatenations[i].expected);
 				}
@@ -375,7 +375,7 @@ describe("Paragraphs: ", function(){
 describe("Embeded tags: ", function(){
 	describe("Youtube links", function(){
 		it("should be parsed into Youtube's embed link with the right base64 ID", function(){
-			for (var i=0; i<embededTestCases.youtube.length; i++){
+			for (let i=0; i<embededTestCases.youtube.length; i++){
 				assert.equal(smark.generate(embededTestCases.youtube[i].original).html, embededTestCases.youtube[i].expected);
 			}
 		});
@@ -383,7 +383,7 @@ describe("Embeded tags: ", function(){
 
 	describe("Vimeo links", function(){
 		it("should be parsed into Vimeo's embed link with the right ID", function(){
-			for (var i=0; i<embededTestCases.vimeo.length; i++){
+			for (let i=0; i<embededTestCases.vimeo.length; i++){
 				assert.equal(smark.generate(embededTestCases.vimeo[i].original).html, embededTestCases.vimeo[i].expected);
 			}
 		});
@@ -391,7 +391,7 @@ describe("Embeded tags: ", function(){
 
 	describe("Image links", function(){
 		it("should be parsed into <img> tags", function(){
-			for (var i=0; i<embededTestCases.image.length; i++){
+			for (let i=0; i<embededTestCases.image.length; i++){
 				assert.equal(smark.generate(embededTestCases.image[i].original).html, embededTestCases.image[i].expected);
 			}
 		});
@@ -399,7 +399,7 @@ describe("Embeded tags: ", function(){
 
 	describe("General links", function(){
 		it("should be parsed into <iframe> tags", function(){
-			for (var i=0; i<embededTestCases.link.length; i++){
+			for (let i=0; i<embededTestCases.link.length; i++){
 				assert.equal(smark.generate(embededTestCases.link[i].original).html, embededTestCases.link[i].expected);
 			}
 		});
@@ -410,10 +410,10 @@ describe("Embeded tags: ", function(){
 describe("Type detection: ", function(){
 	describe("Youtube", function(){
 		it("should detect type correctly as 'youtube'", function(){
-			for (var i=0; i<embededTestCases.youtube.length; i++){
+			for (let i=0; i<embededTestCases.youtube.length; i++){
 				assert.equal(smark.generate(embededTestCases.youtube[i].original).type, "youtube");
 			}
-			for (var i=0; i<embededTestCases.youtube.length; i++){
+			for (let i=0; i<embededTestCases.youtube.length; i++){
 				assert.equal(smark.generate(embededTestCases.youtube[i].original, {type: "youtube"}).type, "youtube");
 			}
 		});
@@ -421,10 +421,10 @@ describe("Type detection: ", function(){
 
 	describe("Vimeo", function(){
 		it("should detect type correctly as 'vimeo'", function(){
-			for (var i=0; i<embededTestCases.vimeo.length; i++){
+			for (let i=0; i<embededTestCases.vimeo.length; i++){
 				assert.equal(smark.generate(embededTestCases.vimeo[i].original).type, "vimeo");
 			}
-			for (var i=0; i<embededTestCases.vimeo.length; i++){
+			for (let i=0; i<embededTestCases.vimeo.length; i++){
 				assert.equal(smark.generate(embededTestCases.vimeo[i].original, {type: "vimeo"}).type, "vimeo");
 			}
 		});
@@ -432,10 +432,10 @@ describe("Type detection: ", function(){
 
 	describe("Image", function(){
 		it("should detect type correctly as 'image'", function(){
-			for (var i=0; i<embededTestCases.image.length; i++){
+			for (let i=0; i<embededTestCases.image.length; i++){
 				assert.equal(smark.generate(embededTestCases.image[i].original).type, "image");
 			}
-			for (var i=0; i<embededTestCases.image.length; i++){
+			for (let i=0; i<embededTestCases.image.length; i++){
 				assert.equal(smark.generate(embededTestCases.image[i].original, {type: "image"}).type, "image");
 			}
 		});
@@ -443,10 +443,10 @@ describe("Type detection: ", function(){
 
 	describe("Links", function(){
 		it("should detect type correctly as 'link'", function(){
-			for (var i=0; i<embededTestCases.link.length; i++){
+			for (let i=0; i<embededTestCases.link.length; i++){
 				assert.equal(smark.generate(embededTestCases.link[i].original).type, "link");
 			}
-			for (var i=0; i<embededTestCases.link.length; i++){
+			for (let i=0; i<embededTestCases.link.length; i++){
 				assert.equal(smark.generate(embededTestCases.youtube[i].original, {type: "link"}).type, "link");
 			}
 		});
@@ -454,8 +454,8 @@ describe("Type detection: ", function(){
 
 	describe("Paragraphs", function(){
 		it("should detect type correctly as 'paragraph'", function(){
-			for (var testCase in paragraphTestCases){
-				for (var i=0; i<paragraphTestCases[testCase].length; i++){
+			for (let testCase in paragraphTestCases){
+				for (let i=0; i<paragraphTestCases[testCase].length; i++){
 					assert.equal(smark.generate(paragraphTestCases[testCase][i].original).type, "paragraph");
 				}
 			}
