@@ -20,7 +20,10 @@ smark.generate = function(source, options) {
     // Default options
     var opt = {
         "type": "auto",
-        "typography": true
+        "typography": true,
+        "vimeoPortrait": true,
+        "vimeoTitle": true,
+        "vimeoByline": true
     };
     // Modify the options according to user passed in value
     for (var i in options){
@@ -75,8 +78,20 @@ smark.generate = function(source, options) {
                 break;
 
             case "vimeo":
+            	var portrait = "0",
+            		title = "0",
+            		byline = "0";
+            	if(opt.vimeoPortrait){
+            		portrait = "1";
+            	}
+            	if(opt.vimeoTitle){
+            		title = "1";
+            	}
+            	if(opt.vimeoByline){
+            		byline = "1";
+            	}
                 str = str.replace(that.vimeoRE, "$1");
-                ret = '<iframe class="smark vimeo" src="https://player.vimeo.com/video/' + str + '" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
+                ret = '<iframe class="smark vimeo" src="https://player.vimeo.com/video/' + str + '?title=' + title + '&byline=' + byline + '&portrait=' + portrait + '" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>';
                 break;
 
             case "image":
