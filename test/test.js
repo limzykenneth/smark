@@ -244,6 +244,10 @@ var embededTestCases = {
 		{
 			original: "vimeo.com/87007946",
 			expected: '<iframe class="smark vimeo" src="https://player.vimeo.com/video/87007946?title=1&byline=1&portrait=1" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+		},
+		{
+			original: "https://player.vimeo.com/video/87007946",
+			expected: '<iframe class="smark vimeo" src="https://player.vimeo.com/video/87007946?title=1&byline=1&portrait=1" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
 		}
 	],
 	"vimeoOptions": [
@@ -257,6 +261,10 @@ var embededTestCases = {
 		},
 		{
 			original: "vimeo.com/87007946",
+			expected: '<iframe class="smark vimeo" src="https://player.vimeo.com/video/87007946?title=0&byline=0&portrait=0" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
+		},
+		{
+			original: "https://player.vimeo.com/video/87007946",
 			expected: '<iframe class="smark vimeo" src="https://player.vimeo.com/video/87007946?title=0&byline=0&portrait=0" frameborder="0" width="853" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>'
 		}
 	],

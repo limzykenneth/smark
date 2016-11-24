@@ -4,7 +4,7 @@ var reg = {
 
 	// Use $1 to return the video id
 	youtubeRE: /^(?:https?:\/\/)?(?:www\.)?youtu(?:\.be|be\.com)\/(?:watch|embed\/watch|embed)?[\?\/]?(?:v=|feature=player_embedded&v=)?([\w-_]+).*?$/,
-	vimeoRE: /^(?:https?:\/\/)?(?:www\.)?vimeo\.com\/(?:channels\/)?(?:\w+\/)?(\d+)$/,
+	vimeoRE: /^(?:https?:\/\/)?(?:www\.|player\.)?vimeo\.com\/(?:channels\/)?(?:\w+\/)?(\d+)$/,
 
 
 	// Match the whole string to return full path to image.
